@@ -22,16 +22,23 @@ let createWindow = () => {
     })
 )
 
-    mainWindow.webContents.openDevTools();
-    mainWindow.on('closed', function () {
-        mainWindow = null
-    });
+    mainWindow.webContents.openDevTools()
+
+    mainWindow.on('closed', function () { mainWindow = null })
+
 }
 
 app.on('ready', function () {
     createWindow()
 
     ipc.on('close-app', app.quit)
+    ipc.on('maxmize-app', () => {
+        if(mainWindow.isMaximized()){
+            mainWindow.unmaximize()
+        } else {
+            mainWindow.maximize()
+        }
+    })
 
 })
 

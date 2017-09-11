@@ -17,15 +17,16 @@ li{list-style: none;}
     width: 2rem; height: 2rem;
     text-align: center; line-height: 2rem;
     transition: all .2s ease;
-    background: rgba(255,255,255,.94);
+
+    background: rgba(0,0,0,.1); color: #fff;
+    border-radius: 3px;
 }
 .btn-conch:hover{
     border-radius: 1rem;
-    background: rgba(0,0,0,.1);
+    background: rgba(255,255,255,.94); color: #000;
 }
 .btn-conch:active{
-    background: rgba(0,0,0,.3);
-    /*background: rgba(78,166,234,1);*/
+    background: rgba(255,255,255,.5); color: #000;
 }
 
 
@@ -33,7 +34,6 @@ li{list-style: none;}
     -webkit-app-region: drag;
     position: fixed; z-index: 100;
     top: 0; left: 0; right: 0;
-    background: rgba(255, 255, 255, .9);
     height: 2rem; line-height: 2rem;
 }
 .header a{
@@ -44,7 +44,7 @@ li{list-style: none;}
 .header:hover a{ border-radius: 0; opacity: 1; }
 .header a:hover{ background-color: rgba(233,233,233,.86); color: #222; }
 #close:hover{ background: rgba(224, 67, 67, .9); color: #fff; }
-.header a:last-child:active{ background: rgba(78, 166, 234, .9); }
+.header a:last-child:active{ background: rgba(78, 166, 234, .9); color: #fff; }
 
 .header span{
     padding-left: .6rem;
@@ -54,8 +54,12 @@ li{list-style: none;}
 .container{
     position: absolute;
     left: 0; top: 0; right: 0; bottom: 0;
-    padding: 2rem .6rem;
     overflow: auto;
+    background: url('../image/bg.jpg') no-repeat;
+    background-size: cover;
+}
+.container a{
+    padding-top: 2rem;
 }
 
 
