@@ -12,7 +12,7 @@ let createWindow = () => {
 
     mainWindow = new BrowserWindow({
         width: 1000, height: 600, frame: false,
-        icon: 'assets/ico.ico'
+        minWidth: 500, minHeight: 400
     })
 
     mainWindow.loadURL(url.format({
@@ -32,6 +32,10 @@ app.on('ready', function () {
     createWindow()
 
     ipc.on('close-app', app.quit)
+    ipc.on('maximize-app', () => {
+        if(mainWindow.isMaximized()){ mainWindow.unmaximize() } else { mainWindow.maximize() }
+    })
+    ipc.on('minimize-app', () => { mainWindow.minimize() })
 
 })
 
