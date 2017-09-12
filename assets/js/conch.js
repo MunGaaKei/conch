@@ -10,9 +10,9 @@
         },
 
         eventListen: () => {
-            doc.querySelectorAll('.header a')[0].onclick = () => { ipc.send('close-app'); }
-            doc.querySelectorAll('.header a')[1].onclick = () => { ipc.send('maximize-app'); }
-            doc.querySelectorAll('.header a')[2].onclick = () => { ipc.send('minimize-app'); }
+            doc.querySelectorAll('.header i')[2].onclick = () => { ipc.send('close-app'); }
+            doc.querySelectorAll('.header i')[1].onclick = () => { ipc.send('maximize-app'); }
+            doc.querySelectorAll('.header i')[0].onclick = () => { ipc.send('minimize-app'); }
         }
 
     };
