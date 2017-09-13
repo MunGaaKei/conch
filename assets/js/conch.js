@@ -10,9 +10,19 @@
         },
 
         eventListen: () => {
-            doc.querySelectorAll('.header i')[2].onclick = () => { ipc.send('close-app'); }
-            doc.querySelectorAll('.header i')[1].onclick = () => { ipc.send('maximize-app'); }
-            doc.querySelectorAll('.header i')[0].onclick = () => { ipc.send('minimize-app'); }
+            doc.querySelectorAll('.winctl i')[2].onclick = () => { ipc.send('close-app'); }
+            doc.querySelectorAll('.winctl i')[1].onclick = () => { ipc.send('maximize-app'); }
+            doc.querySelectorAll('.winctl i')[0].onclick = () => { ipc.send('minimize-app'); }
+
+            win.addEventListener('keyup', (e) => {
+                console.log(e.which);
+                switch (e.which) {
+                    case 116:
+                        location.reload();
+                        break;
+                    default: break;
+                }
+            }, true);
         }
 
     };

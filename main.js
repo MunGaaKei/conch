@@ -1,19 +1,17 @@
-const electron = require('electron')
-const app = electron.app
-const BrowserWindow = electron.BrowserWindow
-
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const url = require('url')
-const ipc = electron.ipcMain
 
 let mainWindow
 
 let createWindow = () => {
 
     mainWindow = new BrowserWindow({
-        width: 1000, height: 600, frame: false,
-        minWidth: 500, minHeight: 400
+        width: 1000, height: 600, minWidth: 500, minHeight: 400,
+        frame: false, show: false, backgroundColor: '#f3f3f3'
     })
+
+    mainWindow.once('ready-to-show', () => { mainWindow.show() })
 
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
@@ -22,7 +20,7 @@ let createWindow = () => {
     })
 )
 
-    mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
 
     mainWindow.on('closed', function () { mainWindow = null })
 
@@ -31,15 +29,15 @@ let createWindow = () => {
 app.on('ready', function () {
     createWindow()
 
-    ipc.on('close-app', app.quit)
-    ipc.on('maximize-app', () => {
+    ipcMain.on('close-app', app.quit)
+    ipcMain.on('maximize-app', () => {
         if(mainWindow.isMaximized()){
             mainWindow.unmaximize()
         } else {
             mainWindow.maximize()
         }
     })
-    ipc.on('minimize-app', () => { mainWindow.minimize() })
+    ipcMain.on('minimize-app', () => { mainWindow.minimize() })
 
 })
 
