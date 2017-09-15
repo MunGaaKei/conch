@@ -20,7 +20,7 @@ let createWindow = () => {
     })
 )
 
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
 
     mainWindow.on('closed', function () { mainWindow = null })
 
@@ -30,14 +30,10 @@ app.on('ready', function () {
     createWindow()
 
     ipcMain.on('close-app', app.quit)
-    ipcMain.on('maximize-app', () => {
-        if(mainWindow.isMaximized()){
-            mainWindow.unmaximize()
-        } else {
-            mainWindow.maximize()
-        }
-    })
+    ipcMain.on('maximize-app', () => { if(mainWindow.isMaximized()){ mainWindow.unmaximize() } else { mainWindow.maximize() } })
     ipcMain.on('minimize-app', () => { mainWindow.minimize() })
+
+
 
 })
 
