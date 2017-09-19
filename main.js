@@ -7,7 +7,7 @@ let mainWindow
 let createWindow = () => {
 
     mainWindow = new BrowserWindow({
-        width: 1000, height: 600, minWidth: 500, minHeight: 400,
+        width: 1000, height: 600, minWidth: 486, minHeight: 400,
         frame: false, show: false, backgroundColor: '#f3f3f3'
     })
 
@@ -29,6 +29,8 @@ let createWindow = () => {
 app.on('ready', function () {
     createWindow()
 
+
+    // ipc事件区
     ipcMain.on('close-app', app.quit)
     ipcMain.on('maximize-app', () => { if(mainWindow.isMaximized()){ mainWindow.unmaximize() } else { mainWindow.maximize() } })
     ipcMain.on('minimize-app', () => { mainWindow.minimize() })
