@@ -3,7 +3,7 @@ body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,figure,fieldse
 a{text-decoration: none;color: #333;}
 body{font: 16px/24px "Segoe UI","Microsoft YaHei",sans-serif;color: #444;}
 ::selection{background: #222;color: #fff;}
-::-webkit-scrollbar{width: .5rem;height: .5rem;}
+::-webkit-scrollbar{width: .4rem;height: .4rem;}
 ::-webkit-scrollbar-button{display: none;}
 ::-webkit-scrollbar-thumb{ background: #aaa; }
 ::-webkit-scrollbar-corner{display: none;}
@@ -19,12 +19,9 @@ li{list-style: none;}
     transition: all .2s ease;
 }
 .btn-conch:hover{
-    /*background-color: rgba(255, 255, 255, 1); */
     color: #000;
-    /*box-shadow: 0 2px 5px #aaa;*/
 }
 .btn-conch:active{
-    /*box-shadow: 0 2px 5px #aaa inset;*/
     background: rgba(243, 243, 243, .9);
 }
 
@@ -49,29 +46,30 @@ li{list-style: none;}
     background-color: rgba(233,233,233,.8); color: #444;
     border-radius: 0; box-shadow: none;
 }
-.winctl .btn-conch:active{ background: rgba(78, 166, 234, .9); color: #fff; }
+.winctl .btn-conch:active, .menuctl:active{ background: rgba(78, 166, 234, .9); color: #fff; }
 .winctl li:last-child .btn-conch:hover{ background: rgba(224, 67, 67, .9); color: #fff; }
 .winctl li:last-child .btn-conch:active{ background: rgba(189, 45, 48, .9); color: #fff; }
-
+.menuctl{
+    -webkit-app-region: no-drag;
+    position: absolute; left: 0; z-index: 10;
+    transition: none;
+}
 
 
 .container{
     position: absolute;
     left: 0; top: 0; right: 0; bottom: 0;
     overflow: auto; background: rgb(243,243,243);
-    /*background: rgb(66,66,66);*/
 }
-
 
 .menu{
     position: absolute;
     left: 0; top: 0; bottom: 0; right: 0;
-    background: #ddd;
+    background: #ccc; font-size: .9375rem; cursor: default;
 }
 .menu nav{
-    width: 2.4rem; height: 100%;
+    float: left; width: 2.4rem; height: 100%;
     background: #ccc; box-shadow: -5px 3px 5px #bbb inset;
-    /*background: rgb(66,66,66);*/
     -webkit-app-region: drag;
 }
 .menu nav i{
@@ -83,24 +81,44 @@ li{list-style: none;}
     background: #ddd;
     box-shadow: -5px 3px 5px #aaa;
 }
-
+.menu-a{
+    float: left;
+    width: 13rem; height: 100%;
+    background: #ddd;
+}
+.menu-a header{
+    padding: 0 .4rem;
+    font-weight: bold; color: #666; line-height: 1.8rem;
+}
 
 
 .main{
     position: absolute; z-index: 100;
     right: 0; top: 0; bottom: 0; left: 15.4rem;
-    overflow: auto;
+    overflow: auto; transition: all .2s ease;
     background: rgb(243, 243, 243); box-shadow: -3px 0 5px #bbb;
-    /*background: rgb(66,66,66);*/
 }
 .widen{
     display: block; height: 100%; width: 1px;
-    position: absolute; left: 0;
+    position: absolute; left: 0; z-index: 10;
     border-left: 1px solid transparent;
     cursor: col-resize;
 }
 
-
+.editor-box{
+    position: absolute;
+    left: 0; top: 2rem; bottom: 2rem; right: 0;
+    overflow: auto;
+}
+.editor{
+    resize: none; outline: none;
+    position: absolute;
+    left: 0; right: 0; top: 2rem; bottom: 0;
+    min-width: 20rem; width: 94%; padding: 1.5rem 3%;
+    background: #ededed; color: #444;
+    font: normal .9375rem/1.57rem "Segoe UI","Microsoft YaHei",sans-serif; letter-spacing: 1px;
+    -webkit-font-smoothing: antialiased;
+}
 
 .console{
     position: absolute;
