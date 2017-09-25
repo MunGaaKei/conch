@@ -11,10 +11,11 @@
 
     <div class="container">
         <aside class="menu">
-            <nav>
-                <i class="iconfont icon-wenzhang btn-conch active"></i>
-                <i class="iconfont icon-delete1 btn-conch"></i>
-                <i class="iconfont icon-shezhi btn-conch"></i>
+            <nav id="navs">
+                <i class="nav-o btn-conch"></i>
+                <i class="iconfont icon-wenzhang btn-conch" data-nav="0"></i>
+                <i class="iconfont icon-delete1 btn-conch" data-nav="1"></i>
+                <i class="iconfont icon-shezhi btn-conch" data-nav="2"></i>
             </nav>
 
             <div class="menu-a">
@@ -23,8 +24,8 @@
 
         </aside>
 
-        <div class="main">
-            <span class="widen"></span>
+        <div id="main" class="main">
+            <span id="widen"></span>
             <header class="header">
                 <i class="iconfont icon-mulu1 btn-conch menuctl"></i>
                 <ul class="winctl clearfix">

@@ -11,22 +11,40 @@
 
         eventListen: () => {
 
-            let main = doc.querySelector('div.main'),
+            let main = doc.getElementById('main'),
+                winctl = doc.querySelectorAll('.winctl i'),
                 mainLeft = 0;
 
             let widen = (e) => {
                 let left = e.clientX < 76.8? 76.8: e.clientX;
                 left = left < 454.4? left: 454.4;
                 main.style.left = left + 'px';
-            }
+            };
 
-            // 应用大小化及关闭
-            doc.querySelectorAll('.winctl i')[2].onclick = () => { ipc.send('close-app'); }
-            doc.querySelectorAll('.winctl i')[1].onclick = () => { ipc.send('maximize-app'); }
-            doc.querySelectorAll('.winctl i')[0].onclick = () => { ipc.send('minimize-app'); }
+
+            // 左侧导航栏
+            doc.getElementById('navs').addEventListener('click', (e) => {
+                let nav = e.target,
+                    navO = doc.getElementById('navs').firstElementChild,
+                    i = parseInt(nav.dataset.nav);
+
+                switch (i) {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    default:break;
+
+                }
+
+                navO.style.transform = 'translateY('+ 38.4 * i + 'px' +')';
+
+            });
 
             // 侧边栏显示与隐藏
-            doc.querySelector('.menuctl').onclick = () => {
+            doc.getElementsByClassName('menuctl')[0].onclick = () => {
                 if(main.getBoundingClientRect().left === 0){
                     main.style.left = mainLeft + 'px';
                 } else {
@@ -36,7 +54,7 @@
             }
 
             // 鼠标监听改变内容区宽度
-            doc.querySelector('span.widen').addEventListener('mousedown', () => {
+            doc.getElementById('widen').addEventListener('mousedown', () => {
                 main.style.transition = 'none';
                 doc.addEventListener('mousemove', widen);
                 doc.addEventListener('mouseup', () => {
@@ -51,12 +69,15 @@
                 console.log(e.which);
                 switch (e.which) {
                     case 116:
-                        location.reload();
-                        break;
+                        location.reload(); break;
                     default: break;
                 }
             }, true);
 
+            // 应用大小化及关闭
+            winctl[2].onclick = () => { ipc.send('close-app'); }
+            winctl[1].onclick = () => { ipc.send('maximize-app'); }
+            winctl[0].onclick = () => { ipc.send('minimize-app'); }
 
         }
 
