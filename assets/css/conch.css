@@ -21,9 +21,6 @@ li{list-style: none;}
 .btn-conch:hover{
     color: #000;
 }
-.btn-conch:active{
-    background: rgba(243, 243, 243, .9);
-}
 
 
 .header{
@@ -79,7 +76,7 @@ li{list-style: none;}
     -webkit-app-region: no-drag;
 }
 .menu nav i:active{
-    background: #ddd;
+    transform: scale(.88);
 }
 .menu .nav-o{
     position: absolute; z-index: 0;
