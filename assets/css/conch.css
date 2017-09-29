@@ -3,7 +3,7 @@ body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,figure,fieldse
 a{text-decoration: none;color: #333;}
 body{font: 16px/24px "Segoe UI","Microsoft YaHei",sans-serif;color: #444;}
 ::selection{background: #222;color: #fff;}
-::-webkit-scrollbar{width: .4rem;height: .4rem;}
+::-webkit-scrollbar{width: .3rem;height: .3rem;}
 ::-webkit-scrollbar-button{display: none;}
 ::-webkit-scrollbar-thumb{ background: #aaa; }
 ::-webkit-scrollbar-corner{display: none;}
@@ -62,7 +62,7 @@ li{list-style: none;}
 .menu{
     position: absolute;
     left: 0; top: 0; bottom: 0; right: 0;
-    background: #bbb; font-size: .9375rem; cursor: default;
+    background: #bbb; cursor: default;
 }
 .menu nav{
     float: left; width: 2.4rem; height: 100%;
@@ -75,9 +75,7 @@ li{list-style: none;}
     font-size: 1.2rem; color: #666;
     -webkit-app-region: no-drag;
 }
-.menu nav i:active{
-    transform: scale(.88);
-}
+.menu nav i:active{ transform: scale(.88); }
 .menu .nav-o{
     position: absolute; z-index: 0;
     left: 0; top: 0;
@@ -85,15 +83,65 @@ li{list-style: none;}
 }
 
 .menu-a{
-    float: left;
-    width: 13rem; height: 100%;
+    float: left; position: relative;
+    width: 26rem; height: 100%; min-width: 13rem;
+    background: #ddd; font-size: .8rem;
+    overflow: auto; transition: all .2s ease;
+    transform: translateX(13rem);
+}
+.menu-a section{ display: none; }
+.menu-a section.show{ display: block; }
+
+.menu-a header, .menu-b header{
+    position: sticky; top: 0; z-index: 10; transform: translateZ(0);
+    padding: .45rem; font-size: 1rem;
     background: #ddd;
 }
-.menu-a header{
-    padding: 0 .4rem; font-weight: bold;
+
+.folder-header{
+    padding: 0 .45rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
+.folder-header:hover{ background: #ccc; }
+.folder-header > i{
+    display: inline-block;
+    transition: transform .1s ease;
+}
+.expanded .folder-header > i{ transform: rotate(90deg); }
+.folder ul{
+    height: 0; overflow: hidden; margin: 0;
+    transition: all .3s ease;
+}
+.expanded ul{
+    margin: 0 0 .4rem; padding: .4rem 0;
+    height: auto; border-bottom: 1px solid #aaa;
+}
+.folder li{
+    padding: .1rem 1rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.folder li i{ margin-right: .4rem; }
+.folder ul li:hover{
+    background: #ccc;
+}
+.nonelist{ opacity: .6; }
+
 .menu-b{
-    width: 13rem;
+    position: absolute; left: 2.4rem; top: 0;
+    width: 13rem; height: 100%; border-right: 1px solid #aaa;
+    background: #ddd; font-size: .8rem; letter-spacing: 1px;
+}
+.menu-b header{
+    z-index: 0;
+    text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.menu-b li{
+    margin-bottom: -1px; padding: .6rem; line-height: 1rem;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+}
+.menu-b li:hover{
+    background: #ccc;
 }
 
 .main{

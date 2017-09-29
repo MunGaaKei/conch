@@ -13,6 +13,7 @@
 
             let main = doc.getElementById('main'),
                 winctl = doc.querySelectorAll('.winctl i'),
+                lists = doc.getElementsByClassName('list'),
                 mainLeft = 0;
 
             let widen = (e) => {
@@ -22,24 +23,31 @@
             };
 
 
-            // 左侧导航栏
-            doc.getElementById('navs').addEventListener('click', (e) => {
-                let nav = e.target,
-                    navO = doc.getElementById('navs').firstElementChild,
-                    i = parseInt(nav.dataset.nav);
+            // 文库 - 列表点击事件
+            lists[0].addEventListener('click', (e) => {
+                let el = e.target;
 
-                switch (i) {
-                    case 0:
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    default:break;
-
+                if(el.classList.contains('folder-header')){
+                    el.parentNode.classList.toggle('expanded');
+                } else if(el.parentNode.classList.contains('folder-header')){
+                    el.parentNode.parentNode.classList.toggle('expanded');
                 }
 
-                navO.style.transform = 'translateY('+ 38.4 * i + 'px' +')';
+            });
+
+
+            // 左侧导航栏
+            doc.getElementById('navs').addEventListener('click', (e) => {
+                let el = e.target,
+                    i = parseInt(el.dataset.sec),
+                    section = doc.querySelectorAll('.menu-a section')[i];
+
+                if(section.classList.contains('show')) return;
+
+                doc.getElementsByClassName('menu-a')[0].style.transform = 'translateX(0)';
+                doc.querySelector('.menu-a section.show').classList.remove('show');
+                section.classList.add('show');
+                doc.getElementById('navs').firstElementChild.style.transform = 'translateY('+ 38.4 * i + 'px' +')';
 
             });
 
