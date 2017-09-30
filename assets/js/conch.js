@@ -27,10 +27,13 @@
             lists[0].addEventListener('click', (e) => {
                 let el = e.target;
 
-                if(el.classList.contains('folder-header')){
+                if(el.tagName == 'UL') return;
+                if(el.tagName == 'I'){ el = el.parentNode; }
+
+                if(el.tagName == 'LI'){
+                    if(el.dataset.type == 'novel') doc.getElementsByClassName('menu-a')[0].style.transform = 'translateX(13rem)';
+                } else if(el.tagName == 'P'){
                     el.parentNode.classList.toggle('expanded');
-                } else if(el.parentNode.classList.contains('folder-header')){
-                    el.parentNode.parentNode.classList.toggle('expanded');
                 }
 
             });

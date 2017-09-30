@@ -87,7 +87,6 @@ li{list-style: none;}
     width: 26rem; height: 100%; min-width: 13rem;
     background: #ddd; font-size: .8rem;
     overflow: auto; transition: all .2s ease;
-    transform: translateX(13rem);
 }
 .menu-a section{ display: none; }
 .menu-a section.show{ display: block; }
@@ -104,8 +103,8 @@ li{list-style: none;}
 }
 .folder-header:hover{ background: #ccc; }
 .folder-header > i{
-    display: inline-block;
-    transition: transform .1s ease;
+    display: inline-block; margin-right: .1rem;
+    transition: transform .05s ease;
 }
 .expanded .folder-header > i{ transform: rotate(90deg); }
 .folder ul{
@@ -127,6 +126,7 @@ li{list-style: none;}
 .nonelist{ opacity: .6; }
 
 .menu-b{
+    box-sizing: border-box;
     position: absolute; left: 2.4rem; top: 0;
     width: 13rem; height: 100%; border-right: 1px solid #aaa;
     background: #ddd; font-size: .8rem; letter-spacing: 1px;
@@ -136,9 +136,10 @@ li{list-style: none;}
     text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .menu-b li{
-    margin-bottom: -1px; padding: .6rem; line-height: 1rem;
+    margin-bottom: -1px; padding: .6rem;
     border-top: 1px solid #aaa;
     border-bottom: 1px solid #aaa;
+    text-align: justify; line-height: 1rem;
 }
 .menu-b li:hover{
     background: #ccc;
