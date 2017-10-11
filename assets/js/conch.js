@@ -7,6 +7,7 @@
         init: () => {
 
             conch.eventListen();
+            conch.readUserSettings();
         },
 
         eventListen: () => {
@@ -37,12 +38,22 @@
                 }
 
             });
+            doc.getElementById('menu-b').addEventListener('click', (e) => {
+                let el = e.target;
+                if(el.classList.contains('active')) return;
+                if(el.tagName == 'LI'){
+                    doc.getElementById('menu-b').getElementsByClassName('active')[0].classList.remove('active');
+                    el.classList.add('active');
 
+                }
+            });
 
             // 左侧导航栏
             doc.getElementById('navs').addEventListener('click', (e) => {
-                let el = e.target,
-                    i = parseInt(el.dataset.sec),
+                let el = e.target;
+                if(el.tagName != 'I') return;
+
+                let i = parseInt(el.dataset.sec),
                     section = doc.querySelectorAll('.menu-a section')[i];
 
                 if(section.classList.contains('show')) return;
@@ -89,6 +100,11 @@
             winctl[2].onclick = () => { ipc.send('close-app'); }
             winctl[1].onclick = () => { ipc.send('maximize-app'); }
             winctl[0].onclick = () => { ipc.send('minimize-app'); }
+
+        },
+
+        // 读取用户配置
+        readUserSettings: () => {
 
         }
 
