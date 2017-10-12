@@ -10,13 +10,8 @@ body{font: 16px/24px "Segoe UI","Microsoft YaHei",sans-serif;color: #444;}
 li{list-style: none;}
 .clearfix:after{ content:" "; display:block; height:0; clear:both; visibility: hidden;}
 .clearfix{*zoom:1;}/*IE/7/6*/
-select{
-    border: none;
-    padding: 0 .2rem;
-    -webkit-appearance: none;
-    background: transparent;
-}
 
+/* 全局样式 */
 .btn-conch{
     display: block;
     width: 2rem; height: 2rem;
@@ -27,7 +22,14 @@ select{
     color: #000;
 }
 
+/* 容器 */
+.container{
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    overflow: auto; background: rgb(243,243,243);
+}
 
+/* 内容区顶部栏 */
 .header{
     -webkit-app-region: drag;
     position: absolute; z-index: 200; transform: translateZ(0);
@@ -63,12 +65,7 @@ select{
 }
 
 
-.container{
-    position: absolute;
-    left: 0; top: 0; right: 0; bottom: 0;
-    overflow: auto; background: rgb(243,243,243);
-}
-
+/* 目录栏 */
 .menu{
     position: absolute;
     left: 0; top: 0; bottom: 0; right: 0;
@@ -90,6 +87,7 @@ select{
     background: #ddd; box-shadow: -5px 3px 5px #aaa;
 }
 
+/* 一级目录 */
 .menu-a{
     float: left; position: relative;
     width: 26rem; height: 100%; min-width: 13rem;
@@ -129,11 +127,29 @@ select{
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .folder li i{ margin-right: .4rem; }
-.folder ul li:hover{
-    background: #ccc;
-}
+.folder ul li:hover{ background: #ccc; }
 .nonelist{ opacity: .6; }
 
+.setting label{
+    float: left; clear: left;
+    margin: 0 .4rem;
+}
+.setting select{
+    float: left;
+    padding: .1rem .2rem; border-radius: .2rem;
+    background-image: linear-gradient(to top, hsl(0, 0%, 96%), hsl(0, 0%, 99%));
+    outline: none; font-family: "Segoe UI","Microsoft YaHei",sans-serif;
+    transition: all .2s ease;
+
+}
+.setting select:hover{
+    background-image: linear-gradient(to top, hsl(0, 0%, 96%), hsl(0, 0%, 99%));
+}
+.setting option{
+    transition: .2s ease;
+}
+
+/* 二级目录 */
 .menu-b{
     box-sizing: border-box;
     position: absolute; left: 2.4rem; top: 0;
@@ -158,6 +174,7 @@ select{
     background: rgba(0, 116, 224, 1); color: #efefef;
 }
 
+/* 内容区 */
 .main{
     position: absolute; z-index: 100;
     right: 0; top: 0; bottom: 0; left: 15.4rem;
@@ -171,6 +188,7 @@ select{
     cursor: col-resize;
 }
 
+/* 编辑盒子 */
 .editor-box{
     position: absolute;
     left: 0; top: 2rem; bottom: 2rem; right: 0;
@@ -185,15 +203,14 @@ select{
     -webkit-font-smoothing: antialiased;
 }
 
+/* 内容区底部栏 */
 .console{
     position: absolute;
     bottom: 0; left: 0; right: 0;
     min-height: 2rem; line-height: 2rem;
     opacity: 0; transition: all .2s ease;
 }
-.console:hover{
-    opacity: 1;
-}
+.console:hover{ opacity: 1; }
 .console li{
     float: right;
 }
