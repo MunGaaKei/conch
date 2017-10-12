@@ -27,7 +27,7 @@
             </div>
 
             <div class="menu-a">
-                <section class="show">
+                <section>
                     <header>
                         <b>文库</b>
                     </header>
@@ -42,7 +42,7 @@
                         <li class="folder">
                             <p class="folder-header"><i class="iconfont icon-sanjiao"></i>短文</p>
                             <ul>
-                                <li><i class="iconfont icon-wenzhang"></i>猫</li>
+                                <li data-type="novel"><i class="iconfont icon-wenzhang"></i>猫</li>
                             </ul>
                         </li>
                         <li class="folder">
@@ -72,10 +72,16 @@
                     <ul class="list"></ul>
                 </section>
 
-                <section>
+                <section class="show">
                     <header>
                         <b>设置</b>
                     </header>
+                    <label for="select">主题: </label>
+                    <select class="select" name="drd">
+                        <option value="1">默认</option>
+                        <option value="2">Black Soul</option>
+                        <option value="3">夜间</option>
+                    </select>
                 </section>
 
             </div>
@@ -94,12 +100,15 @@
             </header>
 
             <div class="editor-box">
-                <textarea class="editor" placeholder="写..."></textarea>
+                <textarea id="editor" class="editor" placeholder="写..."></textarea>
             </div>
 
             <div class="console">
 
-                <i class="iconfont icon-fullscreen btn-conch"></i>
+                <ul>
+                    <li><i id="zoom" class="iconfont icon-fullscreen btn-conch"></i></li>
+                </ul>
+
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@
         init: () => {
 
             conch.eventListen();
-            conch.readUserSettings();
+            conch.setConfig();
         },
 
         eventListen: () => {
@@ -21,6 +21,15 @@
                 let left = e.clientX < 76.8? 76.8: e.clientX;
                 left = left < 454.4? left: 454.4;
                 main.style.left = left + 'px';
+            },  fullScreen = () => {
+                let zoom = doc.getElementById('zoom');
+                if(doc.webkitIsFullScreen){
+                    doc.webkitExitFullscreen();
+                    zoom.className = 'iconfont icon-fullscreen btn-conch';
+                } else {
+                    doc.getElementsByClassName('container')[0].webkitRequestFullscreen();
+                    zoom.className = 'iconfont icon-exitfullscreen btn-conch';
+                }
             };
 
 
@@ -66,14 +75,14 @@
             });
 
             // 侧边栏显示与隐藏
-            doc.getElementsByClassName('menuctl')[0].onclick = () => {
+            doc.getElementsByClassName('menuctl')[0].addEventListener('click', () => {
                 if(main.getBoundingClientRect().left === 0){
                     main.style.left = mainLeft + 'px';
                 } else {
                     mainLeft = main.getBoundingClientRect().left;
                     main.style.left = 0;
                 }
-            }
+            });
 
             // 鼠标监听改变内容区宽度
             doc.getElementById('widen').addEventListener('mousedown', () => {
@@ -88,13 +97,31 @@
 
             // 快捷键监听
             win.addEventListener('keyup', (e) => {
-                console.log(e.which);
-                switch (e.which) {
-                    case 116:
-                        location.reload(); break;
-                    default: break;
+                let key = e.which;
+                console.log(key);
+                if(e.ctrlKey){
+                    switch (key) {
+                        case 83: // S
+                            console.log('SAVE!');
+                            break;
+                        case 79: // O
+                            fullScreen(); break;
+                        default: break;
+                    }
+                } else {
+                    switch (key) {
+                        case 27: // ESC
+                            zoom.className = 'iconfont icon-fullscreen btn-conch'; break;
+                        case 116: // F5
+                            location.reload(); break;
+                        default: break;
+                    }
                 }
-            }, true);
+
+            });
+
+            // 全屏功能
+            doc.getElementById('zoom').addEventListener('click', fullScreen);
 
             // 应用大小化及关闭
             winctl[2].onclick = () => { ipc.send('close-app'); }
@@ -104,7 +131,7 @@
         },
 
         // 读取用户配置
-        readUserSettings: () => {
+        setConfig: () => {
 
         }
 
