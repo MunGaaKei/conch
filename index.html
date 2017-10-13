@@ -10,7 +10,11 @@
 <body>
 
     <div class="container">
+
+        <!-- 侧边栏 -->
         <aside class="menu">
+
+            <!-- 导航栏 -->
             <nav id="navs">
                 <i class="nav-o btn-conch"></i>
                 <i class="iconfont icon-wenzhang2 btn-conch" data-sec="0"></i>
@@ -18,6 +22,7 @@
                 <i class="iconfont icon-shezhi btn-conch" data-sec="2"></i>
             </nav>
 
+            <!-- 二级目录 -->
             <div id="menu-b" class="menu-b">
                 <header>猫</header>
                 <ul>
@@ -26,8 +31,9 @@
                 </ul>
             </div>
 
+            <!-- 一级目录 -->
             <div class="menu-a">
-                <section>
+                <section class="show">
                     <header>
                         <b>文库</b>
                     </header>
@@ -72,7 +78,7 @@
                     <ul class="list"></ul>
                 </section>
 
-                <section class="setting show">
+                <section class="setting">
                     <header>
                         <b>设置</b>
                     </header>
@@ -87,9 +93,14 @@
             </div>
 
         </aside>
+        <!-- 导航栏结束 -->
 
+        <!-- 主页面 -->
         <div id="main" class="main">
+            <!-- 宽度改变 -->
             <span id="widen"></span>
+
+            <!-- 顶部栏 -->
             <header class="header">
                 <i class="iconfont icon-mulu1 btn-conch menuctl"></i>
                 <ul class="winctl clearfix">
@@ -99,10 +110,12 @@
                 </ul>
             </header>
 
+            <!-- 内容区 -->
             <div class="editor-box">
                 <textarea id="editor" class="editor" placeholder="写..."></textarea>
             </div>
 
+            <!-- 底部栏 -->
             <div class="console">
 
                 <ul>
@@ -111,6 +124,8 @@
 
             </div>
         </div>
+        <!-- 主页面结束 -->
+
     </div>
 
 </body>

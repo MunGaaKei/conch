@@ -80,6 +80,7 @@
                     main.style.left = mainLeft + 'px';
                 } else {
                     mainLeft = main.getBoundingClientRect().left;
+                    if(mainLeft === 0) mainLeft = 76.8;
                     main.style.left = 0;
                 }
             });
