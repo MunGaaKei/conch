@@ -62,13 +62,14 @@
                 let el = e.target;
                 if(el.tagName != 'I') return;
 
+                doc.getElementById('editor-box').style.transition = 'none';
+                doc.getElementById('editor-box').classList.remove('show');
+
                 let i = parseInt(el.dataset.sec),
                     section = doc.querySelectorAll('.menu-a section')[i];
 
                 if(section.classList.contains('show')) return;
 
-                doc.getElementsByClassName('menu-a')[0].style.transform = 'translateX(0)';
-                doc.querySelector('.menu-a section.show').classList.remove('show');
                 section.classList.add('show');
                 doc.getElementById('navs').firstElementChild.style.transform = 'translateY('+ 38.4 * i + 'px' +')';
 
