@@ -30,9 +30,9 @@ app.on('ready', function () {
     createWindow()
 
     // ipc事件区
-    ipcMain.on('close-app', app.quit)
-    ipcMain.on('maximize-app', () => { if(mainWindow.isMaximized()){ mainWindow.unmaximize() } else { mainWindow.maximize() } })
-    ipcMain.on('minimize-app', () => { mainWindow.minimize() })
+    ipcMain.on('app-close', app.quit)
+    ipcMain.on('app-maximize', () => { if(mainWindow.isMaximized()){ mainWindow.unmaximize() } else { mainWindow.maximize() } })
+    ipcMain.on('app-minimize', () => { mainWindow.minimize() })
 
 })
 

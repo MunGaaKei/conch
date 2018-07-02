@@ -4,135 +4,57 @@
     <meta charset="UTF-8">
     <title>conch</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
-    <link rel="stylesheet" media="screen" href="http://at.alicdn.com/t/font_412015_14wjb3xfoqnwb3xr.css">
+    <link rel="stylesheet" media="screen" href="http://at.alicdn.com/t/font_412015_opdo8jekcb8uayvi.css">
     <link rel="stylesheet" media="screen" href="assets/css/conch.css">
 </head>
 <body>
 
-    <div class="container">
+    <div id="container" class="container">
 
-        <!-- 侧边栏 -->
-        <aside class="menu">
-
-            <!-- 导航栏 -->
-            <nav id="navs">
-                <i class="nav-o btn-conch"></i>
-                <i class="iconfont icon-wenzhang2 btn-conch" data-sec="0"></i>
-                <i class="iconfont icon-delete1 btn-conch" data-sec="1"></i>
-                <i class="iconfont icon-shezhi btn-conch" data-sec="2"></i>
+        <aside class="aside">
+            <nav id="navs" class="navs">
+                <i class="iconfont icon-articles btn"></i>
+                <i class="iconfont icon-delete btn"></i>
+                <i id="fullscreen" class="iconfont icon-fullscreen btn"></i>
+                <i class="iconfont icon-setting btn"></i>
             </nav>
-
-            <!-- 二级目录 -->
-            <div id="menu-b" class="menu-b">
-                <header>猫</header>
-                <ul>
-                    <li class="active">整个夏天，这只猫都在喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵...</li>
-                    <li>洞穴的比喻，司武丽是我见过最美的回教徒，或者说曾经的回教徒。她的美丽是安拉所不容的...</li>
-                </ul>
-            </div>
-
-            <!-- 一级目录 -->
-            <div class="menu-a">
-                <section class="show">
-                    <header>
-                        <b>文库</b>
-                    </header>
-                    <ul class="list">
-                        <li class="folder expanded">
-                            <p class="folder-header"><i class="iconfont icon-sanjiao"></i>最近</p>
-                            <ul>
-                                <li data-type="novel"><i class="iconfont icon-wenzhang"></i>猫</li>
-                                <li><i class="iconfont icon-wenzhang"></i>湖畔杀人事件</li>
-                            </ul>
-                        </li>
-                        <li class="folder">
-                            <p class="folder-header"><i class="iconfont icon-sanjiao"></i>短文</p>
-                            <ul>
-                                <li data-type="novel"><i class="iconfont icon-wenzhang"></i>猫</li>
-                            </ul>
-                        </li>
-                        <li class="folder">
-                            <p class="folder-header"><i class="iconfont icon-sanjiao"></i>小说</p>
-                            <ul>
-                                <li><i class="iconfont icon-wenzhang"></i>湖畔杀人事件</li>
-                                <li><i class="iconfont icon-wenzhang"></i>解忧杂货店</li>
-                                <li><i class="iconfont icon-wenzhang"></i>像少年飞驰啦</li>
-                                <li><i class="iconfont icon-wenzhang"></i>他的国</li>
-                                <li><i class="iconfont icon-wenzhang"></i>挪威的森林</li>
-                            </ul>
-                        </li>
-                        <li class="folder">
-                            <p class="folder-header"><i class="iconfont icon-sanjiao"></i>记事本</p>
-                            <ul>
-                                <li class="nonelist">: ( 空空如也</li>
-                            </ul>
-                        </li>
-
-                    </ul>
-                </section>
-
-                <section>
-                    <header>
-                        <b>废纸篓</b>
-                    </header>
-                    <ul class="list"></ul>
-                </section>
-
-                <section class="setting">
-                    <header>
-                        <b>设置</b>
-                    </header>
-                    <label for="select">主题</label>
-                    <select class="select" name="drd">
-                        <option value="1">默认</option>
-                        <option value="2">Black Soul</option>
-                        <option value="3">夜间</option>
-                    </select>
-                </section>
-
-            </div>
-
+            <nav id="appmmc" class="navs">
+                <i class="iconfont icon-minimize btn"></i>
+                <i class="iconfont icon-maximize btn"></i>
+                <i class="iconfont icon-close btn"></i>
+            </nav>
         </aside>
-        <!-- 导航栏结束 -->
 
-        <!-- 主页面 -->
-        <div id="main" class="main">
-            <!-- 宽度改变 -->
-            <span id="widen"></span>
+        <div id="articles" class="window on">
+            <menu id="menus" class="menus">
+                <div id="menu" class="menu on">
+                    <h3>文库</h3>
+                    <ul id="folders"></ul>
+                </div>
+                <div id="list" class="list out">
+                    <h3><i id="back" class="iconfont icon-back btn"></i><span id="list-title">挪威的森林</span></h3>
+                    <ul>
+                        <li>
+                            <h4>第一节 重生</h4>
+                            <p>圣诞节分厘卡时间的考虑教授李稻葵圣诞节分厘卡时间的考虑教授李稻葵</p>
+                        </li>
+                        <li>
+                            <h4>第二节 新手村</h4>
+                            <p>行政局哦i现场v加哦i的解放拉萨扩大解放了开始收到两份简历思考解放螺丝扣搭街坊螺丝扣</p>
+                        </li>
+                    </ul>
+                </div>
+            </menu>
+            <main class="main">
 
-            <!-- 顶部栏 -->
-            <header class="header">
-                <i class="iconfont icon-mulu1 btn-conch menuctl"></i>
-                <ul class="winctl clearfix">
-                    <li><i class="iconfont icon-zuixiaohua btn-conch"></i></li>
-                    <li><i class="iconfont icon-zuidahua btn-conch"></i></li>
-                    <li><i class="iconfont icon-close1 btn-conch"></i></li>
-                </ul>
-            </header>
-
-            <!-- 内容区 -->
-            <div id="editor-box" class="editor-box webview">
-                <textarea id="editor" class="editor" placeholder="写..."></textarea>
-            </div>
-
-            <div class="webview show reader-box" style="display: block;">
-
-            </div>
-
-            <!-- 底部栏 -->
-            <div class="console">
-
-                <ul>
-                    <li><i id="zoom" class="iconfont icon-fullscreen btn-conch"></i></li>
-                </ul>
-
-            </div>
+            </main>
         </div>
-        <!-- 主页面结束 -->
 
+        <div id="settings" class="window">
+            <h2>设置</h2>
+        </div>
     </div>
 
-</body>
-
 <script src="assets/js/conch.js"></script>
+</body>
 </html>
