@@ -4,57 +4,105 @@
     <meta charset="UTF-8">
     <title>conch</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
-    <link rel="stylesheet" media="screen" href="http://at.alicdn.com/t/font_412015_opdo8jekcb8uayvi.css">
+    <link rel="stylesheet" media="screen" href="http://at.alicdn.com/t/font_412015_6j7ox4fm7s3.css">
     <link rel="stylesheet" media="screen" href="assets/css/conch.css">
 </head>
 <body>
 
-    <div id="container" class="container">
+<div id="container" class="container">
 
-        <aside class="aside">
-            <nav id="navs" class="navs">
-                <i class="iconfont icon-articles btn"></i>
-                <i class="iconfont icon-delete btn"></i>
-                <i id="fullscreen" class="iconfont icon-fullscreen btn"></i>
-                <i class="iconfont icon-setting btn"></i>
-            </nav>
-            <nav id="appmmc" class="navs">
-                <i class="iconfont icon-minimize btn"></i>
-                <i class="iconfont icon-maximize btn"></i>
-                <i class="iconfont icon-close btn"></i>
-            </nav>
-        </aside>
-
-        <div id="articles" class="window on">
-            <menu id="menus" class="menus">
-                <div id="menu" class="menu on">
-                    <h3>文库</h3>
-                    <ul id="folders"></ul>
-                </div>
-                <div id="list" class="list out">
-                    <h3><i id="back" class="iconfont icon-back btn"></i><span id="list-title">挪威的森林</span></h3>
+    <!-- 侧边栏 -->
+    <aside class="sider">
+        <header>
+            <a href="javascript:location.reload();"><i class="iconfont icon-github"></i></a>
+        </header>
+        <menu class="menu">
+            <div class="tools">
+                <a><i class="iconfont icon-daoru"></i></a>
+                <a><i class="iconfont icon-view"></i></a>
+                <a><i class="iconfont icon-form_favor_light"></i></a>
+                <a data-tool="2"><i class="iconfont icon-tools"></i></a>
+            </div>
+            <ul id="menu" oncontextmenu="return false;">
+                <li>
+                    <p class="item folder">
+                        <i class="iconfont icon-unchecked" data-check="false"></i>
+                        <i class="iconfont icon-folder"></i>
+                        <i class="iconfont icon-tri"></i>
+                        <span>默认</span>
+                    </p>
+                    <ul></ul>
+                </li>
+                <li class="expand">
+                    <p class="item folder">
+                        <i class="iconfont icon-unchecked" data-check="false"></i>
+                        <i class="iconfont icon-folder"></i>
+                        <i class="iconfont icon-tri"></i>
+                        <span>草稿箱</span>
+                    </p>
                     <ul>
-                        <li>
-                            <h4>第一节 重生</h4>
-                            <p>圣诞节分厘卡时间的考虑教授李稻葵圣诞节分厘卡时间的考虑教授李稻葵</p>
+                        <li class="item">
+                            <i class="iconfont icon-unchecked" data-check="false"></i>
+                            <i class="iconfont icon-article"></i>
+                            <span>舍友</span>
                         </li>
-                        <li>
-                            <h4>第二节 新手村</h4>
-                            <p>行政局哦i现场v加哦i的解放拉萨扩大解放了开始收到两份简历思考解放螺丝扣搭街坊螺丝扣</p>
+                        <li class="item">
+                            <i class="iconfont icon-unchecked" data-check="false"></i>
+                            <i class="iconfont icon-article"></i>
+                            <span>大往生</span>
                         </li>
                     </ul>
-                </div>
-            </menu>
-            <main class="main">
+                </li>
+                <li class="item">
+                    <i class="iconfont icon-unchecked" data-check="false"></i>
+                    <i class="iconfont icon-article"></i>
+                    <span>挪威的森林</span>
+                </li>
+            </ul>
+            <footer>
+                <a class="btn" data-act="0"><i class="iconfont icon-total_selection"></i></a>
+                <a class="btn" data-act="1"><i class="iconfont icon-daochu"></i></a>
+                <a class="btn" data-act="2"><i class="iconfont icon-delete"></i></a>
+            </footer>
+        </menu>
+    </aside>
+    <ul id="menucontext" class="menucontext">
+        <li data-act="0"><i class="iconfont icon-edit"></i></li>
+        <li data-act="1"><i class="iconfont icon-daochu"></i></li>
+        <li data-act="2"><i class="iconfont icon-delete"></i></li>
+    </ul>
 
-            </main>
-        </div>
-
-        <div id="settings" class="window">
-            <h2>设置</h2>
+    <!-- 内容区 -->
+    <div class="content">
+        <header class="header">
+            <div class="tabs">
+                <a data-page="pages/editor.html" class="active">纽约<i class="iconfont icon-close"></i></a>
+                <a data-page="pages/reading.html">加利福尼亚的夜晚<i class="iconfont icon-close"></i></a>
+                <a data-page="pages/setting.html">设置<i class="iconfont icon-close"></i></a>
+            </div>
+            <div class="app-controls">
+                <a data-app="app-minimize"><i class="iconfont icon-minimize"></i></a>
+                <a data-app="app-maximize"><i class="iconfont icon-square-o"></i></a>
+                <a data-app="app-close"><i class="iconfont icon-close"></i></a>
+            </div>
+        </header>
+        <div class="windows">
+            <iframe id="pages" name="pages" src="pages/editor.html" class="iframe"></iframe>
         </div>
     </div>
 
+    <!-- 对话框 -->
+    <div id="mask" class="mask" onclick="return location.reload();">
+        <div class="dialog">
+
+        </div>
+    </div>
+
+
+
+</div>
+
+<script>window.$ = require('./assets/js/jquery.min.js');</script>
 <script src="assets/js/conch.js"></script>
 </body>
 </html>

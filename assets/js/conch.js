@@ -1,197 +1,129 @@
 ;(function(win, doc, undefined){
 
     const ipc = require('electron').ipcRenderer;
-    const C_FOLDERS = 'folders';
-    const C_ARTICLES = 'articles';
-    const C_CHAPTERS = 'chapters';
 
-    let DB;
-
-    let conch = {
-
-        init: () => {
-
-            conch.initDB();
-            conch.eListen();
-        },
-
-        // 初始化数据库数据
-        initDB: () => {
-
-            const DB_NAME = 'CONCH';
-            const DB_VER = 1;
-
-            win.indexedDB.deleteDatabase(DB_NAME);
-
-            let DBReq = win.indexedDB.open(DB_NAME, DB_VER);
-
-            DBReq.onsuccess = e => {
-                DB = e.target.result;
-                conch.initUI();
-            }
-            DBReq.onupgradeneeded = e => {
-                let db = e.target.result,
-                    folders, articles, chapters;
-
-                folders = db.createObjectStore(C_FOLDERS, { keyPath: "id", autoIncrement: true });
-                folders.createIndex("id", "id", { unique: true });
-                folders.createIndex("title", "title", { unique: true });
-                folders.add({ title: "默认" });
-
-                articles = db.createObjectStore(C_ARTICLES, { keyPath: "id", autoIncrement: true });
-                articles.createIndex("id", "id", { unique: true });
-                articles.createIndex("title", "title");
-                articles.createIndex("folder", "folder");
-                articles.createIndex("type", "type");
-                articles.createIndex("state", "state");
-                articles.add({ title: "挪威的森林", folder: 1, type: 2 });
-                articles.add({ title: "20180606", content: "明天要去种树！", folder: 1, type: 1 });
-
-                chapters = db.createObjectStore(C_CHAPTERS, { keyPath: "id", autoIncrement: true });
-                chapters.createIndex("id", "id", { unique: true });
-                chapters.createIndex("article", "article");
-                chapters.createIndex("title", "title");
-                chapters.add({ title: "第一章", article: 1, content: "aaaaaaaaaaaa" });
-                chapters.add({ title: "第二章", article: 1, content: "bbbbbbbbbbbb" });
-
-                folders = articles = chapters = null;
-            }
-
-        },
-
-        // 初始化界面
-        initUI: () => {
-
-            let transaction = DB.transaction(C_FOLDERS, 'readonly');
-            let os = transaction.objectStore(C_FOLDERS);
-            let folders = os.getAll();
-
-            folders.onsuccess = () => {
-                folders = folders.result;
-                let html = '';
-                for(i in folders) html += iFolder(folders[i]);
-                by('folders').innerHTML = html;
-                folders = html = null;
-            }
-
-            transaction = DB.transaction(C_ARTICLES, 'readonly');
-            os = transaction.objectStore(C_ARTICLES);
-            let articles = os.getAll();
-
-            articles.onsuccess = () => {
-                articles = articles.result;
-                let kv = {}, files, html = '';
-                for(i in articles){
-                    files = kv[`folder${articles[i].folder}`] || '';
-                    kv[`folder${articles[i].folder}`] = files + iArticle(articles[i]);
-                }
-                for(i in kv){
-                    files = by(i);
-                    if(files) files.innerHTML = kv[i];
-                }
-                articles = html = files = kv = null;
-            }
-
-            transaction = os = null;
-        },
-
-        // 添加事件绑定
-        eListen: () => {
-
-            let appmmc = by('appmmc').getElementsByTagName('i'),
-                navs = by('navs').getElementsByTagName('i');
-
-            by('menu').addEventListener('click', function(e){
-                let tar = e.target,
-                    pa = tar.parentNode;
+    let LASTTAB;    // last activated tab
 
 
-                if(tar.classList.contains('folder')){
-                    pa.classList.toggle('expand');
-                    return;
-                } else if(pa.classList.contains('folder')){
-                    pa.parentNode.classList.toggle('expand');
-                    return;
-                } else if(tar.dataset.type == '2'){
-                    by('list').classList.remove('out');
-                    getArticle(parseInt(tar.dataset.id));
-                    return;
-                }
+    // common functions
+    let BYID = id => doc.getElementById(id);
+    let getTAR = (tar, name, dep = 1) => {
+        while( dep-- ){
+            if(tar.classList.contains(name)) return tar;
+            tar = tar.parentNode;
+        }
+        if(!tar.classList.contains(name)) return false;
+        return tar;
+    }
 
+    // reigst listeners
+    $('.app-controls a').on('click', function(){ ipc.send(this.dataset.app); });
 
-            });
-
-            navs[1].addEventListener('click', function(){ location.reload(); });
-            by('back').addEventListener('click', function(){ by('list').classList.add('out'); });
-
-            // 快捷键监听
-            win.addEventListener('keyup', (e) => {
-                let key = e.which;
-                if(e.ctrlKey){
-                    switch (key) {
-                        case 83: // S save
-                            break;
-                        case 79: // O
-                            fullScreen(); break;
-                        default: break;
-                    }
-                } else {
-                    switch (key) {
-                        case 27: // ESC
-                            by('fullscreen').className = 'iconfont icon-fullscreen btn'; break;
-                        case 116: // F5
-                            location.reload(); break;
-                        default: break;
-                    }
-                }
-            });
-
-            // 全屏功能
-            navs[2].addEventListener('click', fullScreen);
-
-            // 应用大小化及关闭
-            appmmc[2].onclick = () => { ipc.send('app-close'); }
-            appmmc[1].onclick = () => { ipc.send('app-maximize'); }
-            appmmc[0].onclick = () => { ipc.send('app-minimize'); }
-
-            appmmc = navs = null;
-
-        },
-
-        // 读取用户配置
-        setConf: () => {
-
-        },
-
-    };
-
-    // 公用函数
-    let by = id => { return doc.getElementById(id); }
-    let fullScreen = () => {
-        let fs = by('fullscreen');
-        if(doc.webkitIsFullScreen){
-            doc.webkitExitFullscreen();
-            fs.className = 'iconfont icon-fullscreen btn';
+    $('#menu').on('click', '.item', function(){
+        if(this.classList.contains('selected')) return;
+        $('.menu .selected').removeClass('selected');
+        this.classList.add('selected');
+    })
+    .on('click', '.folder', function(){
+        this.parentNode.classList.toggle('expand');
+    })
+    .on('click', '[data-check]', function(e){
+        e.stopPropagation();
+        let checked = this.dataset.check === 'true',
+            item = this.parentNode,
+            checkedIcon = '<i class="iconfont icon-checked" data-check="true"></i>',
+            uncheckedIcon = '<i class="iconfont icon-unchecked" data-check="false"></i>';
+        $(this).replaceWith( checked? uncheckedIcon: checkedIcon );
+        if(item.classList.contains('folder')){
+            $(item.nextElementSibling).find('[data-check="'+ checked +'"]').replaceWith(checked? uncheckedIcon: checkedIcon);
+        } else if( checked ) {
+            $(item).parent().prev().children('[data-check]').replaceWith(uncheckedIcon);
         } else {
-            by('container').webkitRequestFullscreen();
-            fs.className = 'iconfont icon-exitfullscreen btn';
+            let $unchecked = $(item).siblings().children('[data-check="false"]');
+            $unchecked.length === 0 && $(item).parent().prev().children('[data-check]').replaceWith(checkedIcon);
         }
-    }
-    let iFolder = folder => `<li class="item"><p class="folder"><i class="iconfont icon-tri"></i><span>${folder.title}</span></p><ul id="folder${folder.id}"></ul></li>`;
-    let iArticle = article => `<li data-id="${article.id}" data-type="${article.type}"><i class="iconfont icon-article"></i><i class="iconfont icon-unchecked"></i><span>${article.title}</span></li>`
-
-    let getArticle = id => {
-        let transaction = DB.transaction(C_ARTICLES, 'readwrite'),
-            os = transaction.objectStore(C_ARTICLES),
-            article = os.get(id);
-        article.onsuccess = () => {
-            article = article.result;
-            article = null;
+    })
+    .on('mouseup', '.item', function(e){
+        if(e.which === 3){
+            e.stopPropagation();
+            this.click();
+            let menu = $('#menucontext')[0];
+            menu.classList.add('transless');
+            menu.style.cssText = 'left:'+ e.pageX +'px;top:'+ e.pageY +'px;';
+            menu.offsetWidth;
+            menu.classList.remove('transless');
+            menu.classList.add('on');
         }
-        transaction = os = null;
-    }
+    });
 
+    $('#menucontext li').on('click', function(){
+        let act = this.dataset.act,
+            $item = $('.menu .selected');
 
-    conch.init();
+        switch (act) {
+            case '0': // add
+            break;
+            case '1': // edit
+            break;
+            case '2': // delete
+                if($item.hasClass('folder')) $item = $item.parent();
+                $item.remove();
+                break;
+            default: break;
+        }
+    });
+
+    $('.menu .tools a').on('click', function(){
+        let tool = this.dataset.tool;
+        switch (tool) {
+            case '2':
+                $('.menu')[0].classList.toggle('checking');
+                break;
+            default: break;
+        }
+    });
+
+    $('.menu footer a').on('click', function(){
+        let act = this.dataset.act;
+        switch (act) {
+            case '0':
+                let checked = !doc.querySelector('#menu [data-check="false"]');
+                $('#menu [data-check="'+ checked +'"]').replaceWith(
+                    checked?
+                    '<i class="iconfont icon-unchecked" data-check="false"></i>':
+                    '<i class="iconfont icon-checked" data-check="true"></i>'
+                );
+            break;
+            case '2':
+                let $folders = $('#menu .folder [data-check="true"]').parent(),
+                    $items = $('ul [data-check="true"]').parent();
+
+                $items.add($folders.parent());
+                $items.remove();
+            break;
+            default: break;
+        }
+    });
+
+    doc.addEventListener('mouseup', () => { $('#menucontext').removeClass('on'); });
+    $('.menu').on('scroll', () => { $('#menucontext').removeClass('on'); });
+
+    $('.tabs').on('click', 'a', function(e){
+        if(this.classList.contains('active')) return;
+        let prev = $('.tabs .active')[0],
+            page = this.dataset.page;
+        prev && prev.classList.remove('active');
+        LASTTAB = prev;
+        this.classList.add('active');
+        $('#pages').attr('src', page);
+    })
+    .on('click', 'i', function(e){
+        e.stopPropagation();
+        $(this.parentNode).remove();
+
+        LASTTAB = LASTTAB || doc.querySelector('.tabs a.active') || doc.querySelector('.tabs a');
+        LASTTAB && LASTTAB.click();
+    });
+
 
 })(window, document);

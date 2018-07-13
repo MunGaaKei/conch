@@ -1,0 +1,30 @@
+article,aside,dialog,footer,header,section,footer,nav,figure,menu{display:block;}
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,menu,pre,form,figure,fieldset,legend,button,img,input,textarea,th,td{margin:0;padding:0;border:0;}
+a{text-decoration: none;color: #333;}
+body{font: 14px/20px "Segoe UI","Microsoft YaHei",sans-serif;color: #444;}
+::selection{background: #222;color: #fff;}
+::-webkit-scrollbar{width: .4rem;height: .4rem;}
+::-webkit-scrollbar-button{display: none;}
+::-webkit-scrollbar-thumb{ background: #aaa; border-radius: 3px;}
+::-webkit-scrollbar-corner{display: none;}
+li{list-style: none;}
+.clearfix:after{ content:" "; display:block; height:0; clear:both; visibility: hidden;}
+
+.container{
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+}
+
+.tools{
+    position: absolute;
+    bottom: 20px; left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 10px;
+    background: rgba(255,255,255,.9);
+    border-radius: 3px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.13);
+}
+.tools li{
+    display: inline-block;
+    padding: 4px;
+}

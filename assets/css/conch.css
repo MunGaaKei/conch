@@ -1,135 +1,200 @@
 article,aside,dialog,footer,header,section,footer,nav,figure,menu{display:block;}
 body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,menu,pre,form,figure,fieldset,legend,button,img,input,textarea,th,td{margin:0;padding:0;border:0;}
 a{text-decoration: none;color: #333;}
-body{font: 13px/24px "Segoe UI","Microsoft YaHei",sans-serif;color: #444;}
+body{font: 14px/20px "Segoe UI","Microsoft YaHei",sans-serif;color: #444;}
 ::selection{background: #222;color: #fff;}
 ::-webkit-scrollbar{width: .4rem;height: .4rem;}
 ::-webkit-scrollbar-button{display: none;}
-::-webkit-scrollbar-thumb{ background: #aaa; }
+::-webkit-scrollbar-thumb{ background: #aaa; border-radius: 3px;}
 ::-webkit-scrollbar-corner{display: none;}
 li{list-style: none;}
 .clearfix:after{ content:" "; display:block; height:0; clear:both; visibility: hidden;}
-.clearfix{*zoom:1;}/*IE/7/6*/
+.transless{ transition: none !important; }
 
-.btn{
-    display: inline-block; vertical-align: middle;
-    padding: 4px 6px;
-    transition: transform .1s ease;
-}
-
-.container{
+.container, .mask{
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    left: 0; right: 0; top: 0; bottom: 0;
     display: flex;
     overflow: hidden;
 }
-.app-control{
-    float: right;
-    -webkit-app-region: no-drag;
+.btn{
+    display: inline-block;
+    padding: 4px 6px;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.13);
+    background: rgba(255,255,255,.9);
 }
-.aside{
-    display: flex; flex-direction: column; justify-content: space-between;
-    padding: 20px 0;
-    background: #444; color: #ccc; box-shadow: inset -2px 0 2px #333;
-    background-image: linear-gradient(90deg, #333 0%, #444 100%);
+
+/* 侧边栏 */
+.sider{
+    position: relative; z-index: 10;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 250px; max-width: 50%; max-height: 100%;
+    padding-bottom: 10px;
+}
+.sider header{
+    padding: 10px 10px 5px;
     -webkit-app-region: drag;
 }
-.navs{ -webkit-app-region: no-drag; }
-.navs > i{
-    display: block;
-    margin: 4px 0;
-    font-size: 1.1rem;
-    transition: all .15s ease;
-}
-.navs > i:hover{ color: #fff; }
-.navs > i:active, .btn:active{ transform: scale(.94); }
-.window{
-    display: none; flex: 1;
-}
-.window.on{ display: flex; }
-.menus{
-    overflow: hidden;
-    transition: all .3s ease;
-    background: #ddd;
-    position: relative;
+.sider header > a{
+    margin: 0 5px;
+    -webkit-app-region: no-drag;
 }
 .menu{
-    box-sizing: border-box;
-    width: 0; height: 100%;
-    overflow: hidden;
+    flex-grow: 1;
+    padding: 0 10px 20px; margin: 0 10px;
+    background: rgba(255,255,255,.9);
+    border-radius: 10px;
+    overflow: auto;
+    cursor: default; user-select: none;
+}
+.menu .tools{
+    position: sticky; top: 0; z-index: 1;
+    padding: 10px 5px; margin-bottom: 10px;
+    display: flex; justify-content: space-around;
     background: inherit;
-    transition: all .1s ease;
 }
-.list{
-    position: absolute;
-    left: 0; right: 0; bottom: 0; top: 0;
-    background: inherit;
-    transition: transform .2s ease;
-}
-.list.out{ transform: translateX(-100%); }
-.menu.on{ width: 250px; overflow: auto; }
-.menu h3, .list h3{
-    position: sticky; top: 0;
-    padding: 4px 10px;
-    background: inherit;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.list h3{ text-align: right; }
-.list h3 i{ float: left; padding: 0; }
-.list li{
-    margin-bottom: -1px; padding: .6rem;
-    text-align: justify; cursor: default;
-    border-top: 1px solid #aaa; border-bottom: 1px solid #aaa;
-    line-height: 1.45;
-    transition: all .1s ease;
-}
-.list p{
-    -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-    display: -webkit-box; overflow: hidden; text-overflow: ellipsis;
-}
-.list li.selected{ background: rgb(0,116,224); color: #efefef; }
+.menu .iconfont[data-check]{ display: none; }
+[data-check="true"]{ color: #409cff; }
+.checking .iconfont[data-check]{ display: inline-block; }
 .menu .item{
-    cursor: default;
+    padding: 3px 5px;
+    border-radius: 2px;
+    white-space: nowrap;
+}
+.menu .item.selected{ background-color: #eee; }
+.menu .iconfont{ font-size: 17px; vertical-align: middle; display: inline-block; }
+.menu span{ vertical-align: middle; }
+.menu li ul{
+    height: 0; padding: 0;
+    overflow: hidden;
+    transition: all .2s ease;
+}
+li.expand > ul:not(:empty){
+    height: auto;
+    padding: 0 0 5px 20px;
+}
+.icon-tri{ transition: transform .2s ease; }
+.expand .icon-tri{ transform: rotate(90deg); }
+.menu footer{
+    position: absolute; z-index: 1;
+    left: 50%; bottom: 20px;
+    transform: translateX(-50%) scale(0);
+    transition: transform .1s ease;
+}
+.menu footer a{ margin: 2px; }
+.menu footer a:active{ background-color: #eee; }
+.checking footer{ transform: translateX(-50%) scale(1); }
+.menucontext{
+    position: absolute; z-index: 100;
+    box-sizing: border-box;
+    width: 0; padding: 10px 0; margin: -20px 0 0 5px;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.13);
+    overflow: hidden;
+    transition: all .15s ease;
+    white-space: nowrap;
+}
+.menucontext::before{
+    content: '\20'; display: block;
+    position: absolute; top: 50%; left: 0;
+    margin-top: -5px;
+    border: 5px solid transparent;
+    border-left-color: rgba(0,0,0,.13);
+}
+.menucontext.on{ width: auto; padding: 10px; }
+.menucontext li{
+    display: inline-block;
+    margin: 0 4px;
+}
+.menucontext li:hover{ color: #000; background: #eee; }
+
+/* 内容区 */
+.content{ position: relative; flex: 1; }
+.header{
+    position: absolute; z-index: 10;
+    left: 0; right: 0; top: 0;
+    display: flex; flex-wrap: nowrap;
+    height: 32px; line-height: 32px;
+    -webkit-app-region: drag;
     user-select: none;
 }
-.item > ul:empty:after{
-    display: block; text-align: center;
-    content: "it's empty"; color: #aaa;
-    font-family: 'Segoe Print';
-}
-.folder:hover, .item ul li:hover{ background: #ccc; }
-.item ul li:active{ background: #bcbcbc; }
-.folder{
-    padding: .1rem .45rem;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.folder > i{
-    display: inline-block; margin-right: .1rem;
-    transition: transform .05s ease;
-}
-.item li{
-    padding: 0 1rem;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.item li i{ margin-right: .4rem; vertical-align: middle; }
-.item > ul{
-    height: 0; margin: 0;
-    overflow: hidden; border-bottom: 1px solid transparent;
-    transition: all .25s ease;
-}
-.expand ul{
-    height: auto; margin: 0 0 .4rem; padding: .4rem 0;
-    border-color: #aaa;
-}
-.expand .folder > i{ transform: rotate(90deg); }
-.icon-unchecked, .icon-checked{ display: none; }
-.checking{ display: inline; color: #0389ff; }
-
-.main{
-    position: relative;
+.header a{ cursor: default; }
+.header .iconfont{ display: inline-block; transition: transform .1s ease; }
+.tabs{
     flex: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    border-radius: 0 0 4px 4px;
+    background: inherit;
 }
-.editor{
+.tabs a{
+    flex: 1;
+    position: relative;
+    max-width: 150px;
+    padding: 0 10px;
+    background: #fff;
+    border-right: 1px solid #f3f3f3;
+    white-space: nowrap; overflow: hidden; text-align: center; text-overflow: ellipsis;
+    -webkit-app-region: no-drag;
+}
+.tabs a:last-child{
+    border-bottom-right-radius: 4px;
+}
+.tabs i{
+    display: inline-block;
+    position: absolute;
+    right: 4px; top: 7px;
+    padding: 1px 2px;
+    border-radius: 3px;
+    background: inherit;
+    font-size: 1em; font-weight: 600; line-height: 1rem;
+    transform: scale(0);
+}
+.tabs a:hover i{ transform: scale(1); }
+.tabs i:hover{ background: #409cff; color: #fff; }
+.tabs .active{
+    flex: 1 0 auto;
+    background: #d2d2d2;
+    flex-shrink: 0;
+    z-index: 1;
+}
+.app-controls{
+    padding: 0 10px;
+    -webkit-app-region: no-drag;
+    overflow: hidden;
+}
+.app-controls a{ padding: 0 2px; }
+
+.windows{
+    position: absolute;
+    top: 32px; left: 0; right: 0; bottom: 0;
+    display: flex;
+}
+.iframe{
+    flex: 1;
+    height: 100%;
+    border: none;
     box-sizing: border-box;
-    max-width: 666px;
+}
+
+/* 对话框 */
+.mask{
+    background: rgba(0,0,0,.5);
+    z-index: 500;
+    overflow: auto;
+    flex-direction: column;
+    justify-content: center;
+    display: none;
+}
+.dialog{
+    min-width: 50px; min-height: 50px;
+    margin: 50px auto; padding: 10px;
+    background: #fff;
+    border-radius: 4px;
+    overflow: auto;
 }
