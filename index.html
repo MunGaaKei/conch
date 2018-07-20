@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>conch</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
-    <link rel="stylesheet" media="screen" href="http://at.alicdn.com/t/font_412015_6j7ox4fm7s3.css">
+    <link rel="stylesheet" media="screen" href="http://at.alicdn.com/t/font_412015_g2ssyjqwqiw.css">
+    <link rel="stylesheet" media="screen" href="assets/css/common.css">
     <link rel="stylesheet" media="screen" href="assets/css/conch.css">
 </head>
 <body>
@@ -12,18 +13,18 @@
 <div id="container" class="container">
 
     <!-- 侧边栏 -->
-    <aside class="sider">
+    <aside id="sider" class="sider">
         <header>
             <a href="javascript:location.reload();"><i class="iconfont icon-github"></i></a>
         </header>
         <menu class="menu">
             <div class="tools">
-                <a><i class="iconfont icon-daoru"></i></a>
-                <a><i class="iconfont icon-view"></i></a>
-                <a><i class="iconfont icon-form_favor_light"></i></a>
-                <a data-tool="2"><i class="iconfont icon-tools"></i></a>
+                <a><i class="iconfont icon-import" title="导入"></i></a>
+                <a><i class="iconfont icon-view" title="搜索"></i></a>
+                <a><i class="iconfont icon-favors" title="收藏"></i></a>
+                <a data-tool="2"><i class="iconfont icon-listview" title="批量管理"></i></a>
             </div>
-            <ul id="menu" oncontextmenu="return false;">
+            <ul id="menu">
                 <li>
                     <p class="item folder">
                         <i class="iconfont icon-unchecked" data-check="false"></i>
@@ -41,44 +42,61 @@
                         <span>草稿箱</span>
                     </p>
                     <ul>
-                        <li class="item">
+                        <li class="item" data-id="39" data-title="9th March" data-target="pages/editor.html" data-type="1">
                             <i class="iconfont icon-unchecked" data-check="false"></i>
                             <i class="iconfont icon-article"></i>
-                            <span>舍友</span>
+                            <span>9th March</span>
                         </li>
-                        <li class="item">
+                        <li class="item" data-id="26" data-title="加利福尼亚的夜晚" data-target="pages/editor.html" data-type="1">
                             <i class="iconfont icon-unchecked" data-check="false"></i>
                             <i class="iconfont icon-article"></i>
-                            <span>大往生</span>
+                            <span>加利福尼亚的夜晚</span>
+                        </li>
+                        <li class="item" data-type="2">
+                            <i class="iconfont icon-unchecked" data-check="false"></i>
+                            <i class="iconfont icon-articles"></i>
+                            <span>挪威的森林</span>
                         </li>
                     </ul>
                 </li>
-                <li class="item">
+            </ul>
+            <ul id="chapters" class="hidden">
+                <h4><i id="return" class="iconfont icon-back"></i><span>挪威的森林</span></h4>
+                <li class="item" data-id="27" data-title="第一章 [挪威的森林]" data-target="pages/editor.html" data-type="1">
                     <i class="iconfont icon-unchecked" data-check="false"></i>
                     <i class="iconfont icon-article"></i>
-                    <span>挪威的森林</span>
+                    <span>第一章</span>
+                </li>
+                <li class="item" data-id="28" data-title="第二章 [挪威的森林]" data-target="pages/editor.html" data-type="1">
+                    <i class="iconfont icon-unchecked" data-check="false"></i>
+                    <i class="iconfont icon-article"></i>
+                    <span>第二章</span>
+                </li>
+                <li class="item" data-id="29" data-title="第三章 [挪威的森林]" data-target="pages/editor.html" data-type="1">
+                    <i class="iconfont icon-unchecked" data-check="false"></i>
+                    <i class="iconfont icon-article"></i>
+                    <span>第三章</span>
                 </li>
             </ul>
             <footer>
-                <a class="btn" data-act="0"><i class="iconfont icon-total_selection"></i></a>
-                <a class="btn" data-act="1"><i class="iconfont icon-daochu"></i></a>
-                <a class="btn" data-act="2"><i class="iconfont icon-delete"></i></a>
+                <a class="btn" data-act="0"><i class="iconfont icon-selectall" title="全选"></i></a>
+                <a class="btn" data-act="1"><i class="iconfont icon-outport" title="导出"></i></a>
+                <a class="btn" data-act="2"><i class="iconfont icon-delete" title="删除"></i></a>
             </footer>
         </menu>
     </aside>
     <ul id="menucontext" class="menucontext">
-        <li data-act="0"><i class="iconfont icon-edit"></i></li>
-        <li data-act="1"><i class="iconfont icon-daochu"></i></li>
-        <li data-act="2"><i class="iconfont icon-delete"></i></li>
+        <li data-act="0"><i class="iconfont icon-add" title="新建"></i></li>
+        <li data-act="1"><i class="iconfont icon-edit" title="编辑"></i></li>
+        <li data-act="2"><i class="iconfont icon-outport" title="导出"></i></li>
+        <li data-act="3"><i class="iconfont icon-delete" title="删除"></i></li>
     </ul>
 
     <!-- 内容区 -->
     <div class="content">
         <header class="header">
             <div class="tabs">
-                <a data-page="pages/editor.html" class="active">纽约<i class="iconfont icon-close"></i></a>
-                <a data-page="pages/reading.html">加利福尼亚的夜晚<i class="iconfont icon-close"></i></a>
-                <a data-page="pages/setting.html">设置<i class="iconfont icon-close"></i></a>
+
             </div>
             <div class="app-controls">
                 <a data-app="app-minimize"><i class="iconfont icon-minimize"></i></a>
@@ -87,22 +105,32 @@
             </div>
         </header>
         <div class="windows">
-            <iframe id="pages" name="pages" src="pages/editor.html" class="iframe"></iframe>
+            <ul class="controls">
+                <li data-ctrl="0"><i class="iconfont icon-menu" title="目录开关"></i></li>
+                <li data-ctrl="1" id="switch-fs"><i class="iconfont icon-fullscreen" title="全屏模式"></i></li>
+                <li data-ctrl="2"><i class="iconfont icon-setting" title="设置"></i></li>
+            </ul>
         </div>
     </div>
 
     <!-- 对话框 -->
-    <div id="mask" class="mask" onclick="return location.reload();">
-        <div class="dialog">
+    <!-- <div class="dialog">
+        <header class="clearfix"><b>新建文件</b><i class="iconfont icon-close"></i></header>
+        <div class="inner" onclick="return location.reload();">
+            <div class="row">123</div>
+        </div>
+    </div> -->
 
+    <div id="messages" class="messages clearfix">
+        <div class="message">
+            <p>FBI WARNING！<i class="iconfont icon-close"></i></p>
         </div>
     </div>
-
-
 
 </div>
 
 <script>window.$ = require('./assets/js/jquery.min.js');</script>
+<script src="assets/js/init.js"></script>
 <script src="assets/js/conch.js"></script>
 </body>
 </html>

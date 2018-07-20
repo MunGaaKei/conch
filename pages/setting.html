@@ -4,10 +4,63 @@
     <meta charset="utf-8">
     <title>设置</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
-    <link rel="stylesheet" media="screen" href="http://at.alicdn.com/t/font_412015_4h2k8j96mwq.css">
-    <link rel="stylesheet" media="screen" href="../assets/css/pages.css">
+    <link rel="stylesheet" media="screen" href="http://at.alicdn.com/t/font_412015_g2ssyjqwqiw.css">
+    <link rel="stylesheet" media="screen" href="../assets/css/common.css">
+    <link rel="stylesheet" media="screen" href="../assets/css/setting.css">
 </head>
 <body>
-    <div class="container">设置</div>
+    <div class="container">
+
+        <section class="section">
+            <h2 onclick="return location.reload();">默认</h2>
+            <div class="row">
+                <label class="label">主题</label>
+                <div class="item">
+                    <select>
+                        <option value="0">十面埋伏</option>
+                        <option value="1">打回原形</option>
+                        <option value="2">防不胜防</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <label class="label">导出存放位置</label>
+                <div class="item">
+                    <input id="outpath" type="text" readonly value="D:\">
+                    <p>
+                        <label><input type="checkbox"> <span>导出时始终询问存放位置</span></label>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <label class="label">字体默认大小</label>
+                <div class="item">
+                    <select id="fontsize">
+                        <option value="13">13px</option>
+                        <option value="14">14px</option>
+                        <option value="15">15px</option>
+                        <option value="16">16px</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>关于</h2>
+            <div class="row">
+                <label class="label">更新</label>
+                <div class="item">
+                    <a class="btn">检测版本 1.0</a>
+                </div>
+            </div>
+            <div class="row">
+                <label class="label">项目地址</label>
+                <p class="item"><a href="javascript:;" data-href="https://github.com/MunGaaKei/conch"><i class="iconfont icon-github"></i> <span style="font-family: 'Segoe Print';">Conch</span></a></p>
+            </div>
+        </section>
+
+    </div>
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/setting.js"></script>
 </body>
 </html>

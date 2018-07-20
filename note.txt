@@ -1,12 +1,67 @@
-z-index list:
+=====================
+    z-index list
+=====================
 
+## common
+
+500     .dialog
+
+600     .message
+
+
+## index
 1       .tab a.active
         .menu footer
         .menu .tools
+        .vertline
 
 10      .content header
         .sider
 
 100     .menucontext
 
-500     .mask
+## editor
+
+1       .drops
+
+
+
+
+
+
+
+
+
+
+
+=====================
+    article type
+=====================
+
+1       article
+2       fiction
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=====================
+      settings
+=====================
+
+##  导出格式
+##  导出路径（询问）
+##  主题
+##  字体默认大小
+##  默认字体
+##  纯净模式

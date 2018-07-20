@@ -1,0 +1,50 @@
+.container{ overflow-y: auto; }
+input, select, .btn{
+    display: inline-block;
+    padding: .15rem .2rem;
+    border: 1px solid hsla(0, 0%, 4%, 0.3);
+    border-radius: 3px;
+    outline: none;
+    background-image: linear-gradient(to top, hsl(0, 0%, 96%), hsl(0, 0%, 99%));
+    font-family: inherit;
+    vertical-align: middle;
+    transition: all .1s ease;
+}
+.btn{ padding: .15rem .5rem; cursor: default; }
+input[type="text"]{
+    padding: .15rem .5rem .25rem;
+}
+input[type="text"]:hover,
+select:hover,
+.btn:hover{
+    box-shadow: 0 1px 2px 0 hsla(0, 0%, 0%, 0.15);
+    filter: brightness(106%);
+}
+label{ vertical-align: middle; }
+
+.section{
+    margin: 50px 48px;
+}
+.section:first-child{ margin-top: 20px; }
+.section h2{
+    box-sizing: border-box;
+    padding: 3px 0 5px 12px; margin: 0 0 30px;
+    border-left: 8px solid #444;
+}
+
+.row{
+    margin: 20px 0;
+    display: flex;
+}
+.row span, .row i{ vertical-align: middle; }
+.label{
+    display: inline-block;
+    width: 100px;
+    margin-right: 10px; padding-top: .1rem;
+    flex-shrink: 0;
+    font-weight: 500;
+    vertical-align: middle;
+}
+.row .item{
+    flex: 1;
+}

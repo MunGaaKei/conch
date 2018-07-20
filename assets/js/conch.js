@@ -15,18 +15,56 @@
         if(!tar.classList.contains(name)) return false;
         return tar;
     }
+    let fullScreen = () => {
+        let $fs = $('#switch-fs i');
+        if(doc.webkitIsFullScreen){
+            doc.webkitExitFullscreen();
+            $fs.removeClass('icon-exitfullscreen').addClass('icon-fullscreen');
+        } else {
+            $('#container')[0].webkitRequestFullscreen();
+            $fs.removeClass('icon-fullscreen').addClass('icon-exitfullscreen');
+        }
+    }
+    let open = (id, title, page, params) => {
+        let tab = doc.querySelector(`.tabs a[data-id="i-${id}"]`);
+        if( !tab ){
+            let search = [], key;
+            for(key in params){ search.push(`${key}=${params[key]}`); }
+            search = search.length? ('?'+ search.join('&')): '';
+
+            let iframe = $(`<iframe id="i-${id}" src="${page}${search}" class="window"></iframe>`);
+            tab = $(`<a data-id="i-${id}" title="${title}">${title}<i class="iconfont icon-close"></i></a>`);
+            $('.windows').append(iframe);
+            $('.tabs').prepend(tab);
+        }
+        tab.click();
+    }
+    let close = id => {
+        let close = doc.querySelector(`.tabs a[data-id="i-${id}"] i`);
+        close && close.click();
+    }
 
     // reigst listeners
     $('.app-controls a').on('click', function(){ ipc.send(this.dataset.app); });
 
-    $('#menu').on('click', '.item', function(){
-        if(this.classList.contains('selected')) return;
+    $('#menu, #chapters').on('click', '.item', function(){
         $('.menu .selected').removeClass('selected');
         this.classList.add('selected');
+
+        // activate or create tab here
+        let ds = this.dataset;
+        switch (ds.type) {
+            case '1':
+                open(ds.id, ds.title, ds.target, { id: ds.id });
+            break;
+            case '2':
+                // load chapters here ...
+                $('.menu > ul').toggleClass('hidden');
+            break;
+            default: break;
+        }
     })
-    .on('click', '.folder', function(){
-        this.parentNode.classList.toggle('expand');
-    })
+    .on('click', '.folder', function(){ this.parentNode.classList.toggle('expand'); })
     .on('click', '[data-check]', function(e){
         e.stopPropagation();
         let checked = this.dataset.check === 'true',
@@ -46,8 +84,11 @@
     .on('mouseup', '.item', function(e){
         if(e.which === 3){
             e.stopPropagation();
-            this.click();
+            $('.menu .selected').removeClass('selected');
+            this.classList.add('selected');
+
             let menu = $('#menucontext')[0];
+            menu.classList[this.classList.contains('folder')? 'remove': 'add']('menufolder');
             menu.classList.add('transless');
             menu.style.cssText = 'left:'+ e.pageX +'px;top:'+ e.pageY +'px;';
             menu.offsetWidth;
@@ -55,18 +96,21 @@
             menu.classList.add('on');
         }
     });
+    $('#return')[0].addEventListener('click', () => { $('.menu > ul').toggleClass('hidden'); });
 
     $('#menucontext li').on('click', function(){
         let act = this.dataset.act,
             $item = $('.menu .selected');
 
         switch (act) {
-            case '0': // add
+            case '0':
+
             break;
-            case '1': // edit
+            case '1':
             break;
-            case '2': // delete
+            case '3':
                 if($item.hasClass('folder')) $item = $item.parent();
+                close($item.data("id"));
                 $item.remove();
                 break;
             default: break;
@@ -105,24 +149,67 @@
         }
     });
 
-    doc.addEventListener('mouseup', () => { $('#menucontext').removeClass('on'); });
     $('.menu').on('scroll', () => { $('#menucontext').removeClass('on'); });
+
+    $('.controls li').on('click', function(){
+        let ctrl = this.dataset.ctrl;
+        switch (ctrl) {
+            case '0': $('#sider')[0].classList.toggle('hidden'); break;
+            case '1': fullScreen(); break;
+            case '2': open('settings', '设置', 'pages/setting.html'); break;
+            default: break;
+        }
+    });
 
     $('.tabs').on('click', 'a', function(e){
         if(this.classList.contains('active')) return;
-        let prev = $('.tabs .active')[0],
-            page = this.dataset.page;
+        let prev = $('.tabs .active')[0];
         prev && prev.classList.remove('active');
         LASTTAB = prev;
+
         this.classList.add('active');
-        $('#pages').attr('src', page);
+        $('.window.on').removeClass('on');
+        $(`#${this.dataset.id}`).addClass('on');
     })
     .on('click', 'i', function(e){
         e.stopPropagation();
-        $(this.parentNode).remove();
+        let tab = this.parentNode;
+        $(tab).add('#'+ tab.dataset.id).remove();
 
         LASTTAB = LASTTAB || doc.querySelector('.tabs a.active') || doc.querySelector('.tabs a');
         LASTTAB && LASTTAB.click();
+    });
+
+    // let DND_DIALOG = false,
+    //     DND_DIALOG_EL = $('.dialog')[0],
+    //     DND_DX, DND_DY;
+    // $('.dialog header').on('mousedown', function(e){
+    //     let rect = this.getBoundingClientRect();
+    //     DND_DX = e.clientX - rect.left,
+    //     DND_DY = e.clientY - rect.top;
+    //     DND_DIALOG = true;
+    // });
+    //
+    // doc.addEventListener('mousemove', function(e){
+    //     if(!DND_DIALOG) return false;
+    //     let x = e.pageX - DND_DX,
+    //         y = e.pageY - DND_DY;
+    //     DND_DIALOG_EL.style.cssText = `left:${x}px;top:${y}px;`;
+    // });
+    // doc.addEventListener('mouseup', function(e){
+    //     $('#menucontext').removeClass('on');
+    //     DND_DIALOG = false;
+    //
+    // });
+
+    // 快捷键监听
+    win.addEventListener('keyup', (e) => {
+        let key = e.which;
+        switch (key) {
+            case 27: // ESC
+                $('#switch-fs i').removeClass('icon-exitfullscreen').addClass('icon-fullscreen'); break;
+            default: break;
+        }
     });
 
 

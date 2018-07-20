@@ -1,30 +1,146 @@
-article,aside,dialog,footer,header,section,footer,nav,figure,menu{display:block;}
-body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,menu,pre,form,figure,fieldset,legend,button,img,input,textarea,th,td{margin:0;padding:0;border:0;}
-a{text-decoration: none;color: #333;}
-body{font: 14px/20px "Segoe UI","Microsoft YaHei",sans-serif;color: #444;}
-::selection{background: #222;color: #fff;}
-::-webkit-scrollbar{width: .4rem;height: .4rem;}
-::-webkit-scrollbar-button{display: none;}
-::-webkit-scrollbar-thumb{ background: #aaa; border-radius: 3px;}
-::-webkit-scrollbar-corner{display: none;}
-li{list-style: none;}
-.clearfix:after{ content:" "; display:block; height:0; clear:both; visibility: hidden;}
-
-.container{
-    position: absolute;
-    left: 0; right: 0; top: 0; bottom: 0;
+.btn{
+    display: inline-block;
+    padding: 6px 8px;
+    border-radius: 2px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.13);
+    vertical-align: middle;
+}
+.btn:active{ background: #f1f1f1; }
+.dialog{
+    position: absolute; z-index: 100;
+    left: 50px; top: 50px;
+    height: 100px; width: 200px;
+    padding: 20px;
+    background: rgba(255,255,255,.94);
+    box-shadow: 0 2px 12px rgba(0,0,0,.13);
+    border-radius: 5px;
 }
 
 .tools{
     position: absolute;
-    bottom: 20px; left: 50%;
-    transform: translateX(-50%);
-    padding: 4px 10px;
+    left: 100%; top: 100%;
+    width: auto;
     background: rgba(255,255,255,.9);
     border-radius: 3px;
     box-shadow: 0 2px 12px rgba(0,0,0,.13);
+    white-space: nowrap;
+    user-select: none;
+    font-size: 16px;
+    cursor: default;
 }
+.tools.minimized{ width: 62px; overflow: hidden; }
+.tools ul{ padding: 4px; }
+.tools > ul{ display: inline-block; }
 .tools li{
+    position: relative;
     display: inline-block;
-    padding: 4px;
+    padding: 2px 4px;
+    border-radius: 3px;
 }
+.tools li:hover,
+.tools li.active{ background: #3b9aff; color: #fff; }
+.tools .active .drops,
+.drops:focus-within{ display: block; }
+.drops{
+    position: absolute; z-index: 1;
+    top: 150%; left: -4px;
+    min-height: 30px; min-width: 120%;
+    background: #fff; color: #444;
+    box-shadow: 0 -1px 12px rgba(0,0,0,.13);
+    border-radius: 3px;
+    display: none;
+}
+.drops:before{
+    content: '\20'; display: block;
+    position: absolute;
+    bottom: 100%; left: 8px;
+    border: 6px solid transparent;
+    border-bottom-color: #fff;
+}
+.colorbox{ left: -140px; }
+.colorbox:before{ left: 145px; }
+.drops li{ display: inline-block; }
+.bybottom .drops{ top: auto; bottom: 150%; }
+.bybottom .drops:before{
+    bottom: auto; top: 100%;
+    border-bottom-color: transparent; border-top-color: #fff;
+}
+.drops.reverse{ left: auto; right: -4px; }
+.drops.reverse:before{ left: auto; right: 8px; }
+#colorpicker{
+    display: block;
+    margin: 10px;
+    border-radius: inherit;
+    box-shadow: 0 2px 12px rgba(0,0,0,.13);
+}
+.rgb{
+    margin: 10px;
+    font-size: 14px;
+}
+.rgb .btn{
+    float: right;
+    margin: 8px 0 0;
+    border-left: 14px solid #000;
+}
+.rgb p{
+    display: inline-block;
+    width: 36px; margin: 0 2px;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 3px;
+    border: 1px solid transparent;
+}
+.rgb p:focus-within{ border-color: #c1c1c1; background: #f6f6f6; }
+.rgb span{
+    padding: 4px 6px;
+    outline: none;
+    display: block;
+}
+.rgb span:not(:focus):empty:before{
+    content: '0'; display: block;
+    color: #bbb;
+}
+
+.editor-o{
+    height: 100%;
+    outline: none;
+    overflow: auto;
+}
+.editor{
+    position: relative;
+    width: 94%;
+    max-width: 801px; min-height: 61.8%;
+    margin: 20px auto; padding: 30px 40px;
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 5px;
+    user-select: initial;
+    background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.13);
+    transition: background .2s ease;
+}
+.editor:focus{
+    background: none;
+    box-shadow: none;
+}
+.editor:empty:before{
+    content: attr(placeholder); display: block;
+    color: #bbb;
+}
+.post h1{ line-height: 1.4258em; }
+.post h2{ line-height: 1.265em; }
+.post font{ line-height: 1; }
+blockquote{
+    padding: 10px;
+    border-left: 3px solid #aaa;
+    background: #fcfcfc;
+    border-radius: 2px;
+}
+
+
+/* 纯净模式 */
+.clear .tools{
+    transition: opacity .2s ease 1s;
+    opacity: 0;
+}
+.clear .tools:hover{ opacity: 1; transition: opacity .05s ease; }

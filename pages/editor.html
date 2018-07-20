@@ -4,21 +4,117 @@
     <meta charset="utf-8">
     <title>编辑器</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
-    <link rel="stylesheet" media="screen" href="http://at.alicdn.com/t/font_412015_6j7ox4fm7s3.css">
+    <link rel="stylesheet" media="screen" href="http://at.alicdn.com/t/font_412015_g2ssyjqwqiw.css">
+    <link rel="stylesheet" media="screen" href="../assets/css/common.css">
     <link rel="stylesheet" media="screen" href="../assets/css/pages.css">
 </head>
 <body>
     <div class="container">
 
-        <section class="tools">
+        <div class="editor-o">
+            <div id="editor" class="editor post" placeholder="从这里开始写吧..."></div>
+        </div>
+
+        <section id="toolbar" class="tools">
             <ul>
-                <li><i class="iconfont icon-fontbold"></i></li>
-                <li><i class="iconfont icon-fontitalics"></i></li>
-                <li><i class="iconfont icon-fontunderline"></i></li>
-                <li><i class="iconfont icon-fontstrikethrough"></i></li>
+                <li id="movable"><i class="iconfont icon-hand" title="按住拖动"></i></li>
+                <li data-act="0"><i class="iconfont icon-code" title="收展"></i></li>
+            </ul>
+
+            <ul>
+                <li data-act="15"><i class="iconfont icon-clear" title="纯净模式"></i></li>
+                <li id="fontsize" data-act="drop">
+                    <i class="iconfont icon-size" title="字体大小"></i>
+                    <div class="drops">
+                        <ul>
+                            <li data-size="1" data-span="13">13</li>
+                            <li data-size="2" data-span="14">14</li>
+                            <li data-size="3" data-span="15">15</li>
+                            <li data-size="4" data-span="16">16</li>
+                            <li data-size="5" data-span="24">24</li>
+                            <li data-size="6" data-span="36">36</li>
+                            <li data-size="7" data-span="48">48</li>
+                        </ul>
+                    </div>
+                </li>
+                <li data-act="drop">
+                    <i class="iconfont icon-fontcolor" title="字体颜色"></i>
+                    <div class="drops colorbox">
+                        <canvas id="colorpicker" width="250" height="154.5"></canvas>
+                        <div id="rgb" class="rgb clearfix">
+                            <p>
+                                <b>R</b>
+                                <span data-i="0" contenteditable="plaintext-only">0</span>
+                            </p>
+                            <p>
+                                <b>G</b>
+                                <span data-i="1" contenteditable="plaintext-only">0</span>
+                            </p>
+                            <p>
+                                <b>B</b>
+                                <span data-i="2" contenteditable="plaintext-only">0</span>
+                            </p>
+                            <a class="btn">确定</a>
+                        </div>
+                    </div>
+                </li>
+                <li data-act="drop">
+                    <i class="iconfont icon-align-left" title="文本对齐"></i>
+                    <div class="drops">
+                        <ul>
+                            <li data-act="6" data-align="justifyLeft"><i class="iconfont icon-align-left"></i></li>
+                            <li data-act="6" data-align="justifyRight"><i class="iconfont icon-align-right"></i></li>
+                            <li data-act="6" data-align="justifyCenter"><i class="iconfont icon-align-center"></i></li>
+                            <li data-act="6" data-align="justifyFull"><i class="iconfont icon-align-justify"></i></li>
+                        </ul>
+                    </div>
+                </li>
+                <li data-act="drop">
+                    <i class="iconfont icon-header" title="标题"></i>
+                    <div class="drops reverse">
+                        <ul>
+                            <li data-act="7" data-h="h1"><i class="iconfont icon-h1"></i></li>
+                            <li data-act="7" data-h="h2"><i class="iconfont icon-h2"></i></li>
+                            <li data-act="7" data-h="h3"><i class="iconfont icon-h3"></i></li>
+                            <li data-act="7" data-h="h4"><i class="iconfont icon-h4"></i></li>
+                            <li data-act="7" data-h="h5"><i class="iconfont icon-h5"></i></li>
+                            <li data-act="7" data-h="h6"><i class="iconfont icon-h6"></i></li>
+                        </ul>
+                    </div>
+                </li>
+                <li data-act="drop">
+                    <i class="iconfont icon-insert" title="插入"></i>
+                    <div class="drops reverse">
+                        <ul>
+                            <li data-act="9"><i class="iconfont icon-image" title="图片"></i></li>
+                            <li data-act="10"><i class="iconfont icon-needle" title="链接"></i></li>
+                            <li data-act="11"><i class="iconfont icon-script" title="代码"></i></li>
+                            <li data-act="12"><i class="iconfont icon-table" title="表格"></i></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <br>
+            <ul>
+                <li data-act="14"><i class="iconfont icon-edit" title="编辑模式"></i></li>
+                <li data-act="13"><i class="iconfont icon-fold" title="返回顶部"></i></li>
+            </ul>
+            <ul>
+                <li data-act="1" onclick="return location.reload();"><i class="iconfont icon-save" title="保存"></i></li>
+                <li data-act="2"><i class="iconfont icon-bold" title="粗体"></i></li>
+                <li data-act="3"><i class="iconfont icon-italic" title="斜体"></i></li>
+                <li data-act="4"><i class="iconfont icon-underline" title="下划线"></i></li>
+                <li data-act="5"><i class="iconfont icon-strike" title="删除线"></i></li>
+                <li data-act="8"><i class="iconfont icon-quotesleft" title="引用"></i></li>
             </ul>
         </section>
 
+        <!-- <div class="dialog">
+
+        </div> -->
+
     </div>
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/editor.js"></script>
 </body>
 </html>
