@@ -8,6 +8,14 @@
     LS.PATH_OUTPUT_REQUEST = LS.PATH_OUTPUT_REQUEST || false;
     LS.FONT_SIZE = LS.FONT_SIZE || 14;
 
+    let messageOut = ( el ) => {
+        el.classList.add('out');
+        el && setTimeout(() => {
+            el.onclick = null;
+            el && el.parentNode.removeChild(el);
+        }, 200);
+    }
+
     $.extend({
         message: ( options ) => {
             if( !options ) return;
@@ -15,7 +23,15 @@
                 message = doc.createElement('DIV');
             if(typeof options === 'string') options = { text: options };
             message.className = 'message';
+            message.innerHTML = options.text;
 
+            let messages = box.getElementsByClassName('message');
+            if( messages ){ box.insertBefore(message, messages[0]); } else { box.appendChild(message); }
+
+            message.offsetWidth;
+            message.classList.add('in');
+            message.onclick = () => { messageOut(message); };
+            options.timeout && setTimeout(() => { messageOut(message); }, options.timeout);
         }
     });
 
@@ -29,5 +45,6 @@
             return this;
         }
     });
+    
 
 })(window, document);

@@ -96,7 +96,7 @@
             menu.classList.add('on');
         }
     });
-    $('#return')[0].addEventListener('click', () => { $('.menu > ul').toggleClass('hidden'); });
+    $('#chapters h4')[0].addEventListener('click', () => { $('.menu > ul').toggleClass('hidden'); });
 
     $('#menucontext li').on('click', function(){
         let act = this.dataset.act,
@@ -150,6 +150,7 @@
     });
 
     $('.menu').on('scroll', () => { $('#menucontext').removeClass('on'); });
+    $(doc).on('click', () => { $('#menucontext').removeClass('on'); });
 
     $('.controls li').on('click', function(){
         let ctrl = this.dataset.ctrl;

@@ -83,8 +83,9 @@
         }
     });
     win.addEventListener('resize', () => {
-        if(LS.TOOLBAR_X > win.innerWidth || LS.TOOLBAR_Y > win.innerHeight){
+        if(LS.TOOLBAR_X >= win.innerWidth || LS.TOOLBAR_Y >= win.innerHeight){
             LS.TOOLBAR_X = LS.TOOLBAR_Y = 10;
+            console.log('resize');
             TOOLBAR.style.cssText = 'left:'+ LS._toolbarX +'px;top:'+ LS._toolbarY +'px;';
             TOOLBAR.classList.remove('bybottom');
         }

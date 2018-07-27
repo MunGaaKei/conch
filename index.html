@@ -32,7 +32,13 @@
                         <i class="iconfont icon-tri"></i>
                         <span>默认</span>
                     </p>
-                    <ul></ul>
+                    <ul>
+                        <li class="item" data-id="54" data-title="无人之境" data-target="pages/editor.html" data-type="1">
+                            <i class="iconfont icon-unchecked" data-check="false"></i>
+                            <i class="iconfont icon-article"></i>
+                            <span>无人之境</span>
+                        </li>
+                    </ul>
                 </li>
                 <li class="expand">
                     <p class="item folder">
@@ -61,7 +67,7 @@
                 </li>
             </ul>
             <ul id="chapters" class="hidden">
-                <h4><i id="return" class="iconfont icon-back"></i><span>挪威的森林</span></h4>
+                <h4><i class="iconfont icon-back"></i><span>挪威的森林</span></h4>
                 <li class="item" data-id="27" data-title="第一章 [挪威的森林]" data-target="pages/editor.html" data-type="1">
                     <i class="iconfont icon-unchecked" data-check="false"></i>
                     <i class="iconfont icon-article"></i>
@@ -114,18 +120,15 @@
     </div>
 
     <!-- 对话框 -->
-    <!-- <div class="dialog">
+    <div class="dialog">
         <header class="clearfix"><b>新建文件</b><i class="iconfont icon-close"></i></header>
-        <div class="inner" onclick="return location.reload();">
+        <div class="inner">
             <div class="row">123</div>
         </div>
-    </div> -->
-
-    <div id="messages" class="messages clearfix">
-        <div class="message">
-            <p>FBI WARNING！<i class="iconfont icon-close"></i></p>
-        </div>
     </div>
+
+    <!-- 消息框 -->
+    <div id="messages" class="messages clearfix"></div>
 
 </div>
 

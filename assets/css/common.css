@@ -9,7 +9,7 @@ body{font: 14px/20px "Segoe UI","Microsoft YaHei",sans-serif;color: #444;}
 ::-webkit-scrollbar-corner{display: none;}
 li{list-style: none;}
 .clearfix:after{ content:" "; display:block; height:0; clear:both; visibility: hidden;}
-.iconfont{ font-size: 1.1rem; }
+.iconfont{ font-size: inherit; }
 
 .transless{ transition: none !important; }
 
@@ -49,11 +49,20 @@ li{list-style: none;}
 .messages{
     position: absolute; z-index: 600;
     top: 42px; right: 10px;
+    max-width: calc(100% - 20px);
 }
 .message{
-    float: right;
+    float: right; clear: both;
+    box-sizing: border-box;
+    max-width: 100%;
     padding: 10px; margin: 0 0 20px;
-    background: rgba(255,255,255,.94);
+    background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+    color: #fff;
     border-radius: 3px;
     box-shadow: 0 2px 12px rgba(0,0,0,.13);
+    transition: transform .2s ease, opacity .2s ease;
+    opacity: 0;
+    transform: scale(.94);
 }
+.message.in{ transform: none; opacity: 1; }
+.message.out{ transform: translateX(20px); opacity: 0; }

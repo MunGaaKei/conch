@@ -1,6 +1,6 @@
 .container{
     display: flex;
-    background-color: #f3f3f3;
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 }
 .btn{
     display: inline-block;
@@ -19,6 +19,8 @@
     width: 250px; max-width: 50%; max-height: 100%;
     padding-bottom: 10px;
 }
+.sider .iconfont,
+.controls .iconfont{ font-size: 1.15em; }
 .sider.hidden{ display: none; }
 .sider header{
     padding: 10px 10px 5px;
@@ -36,6 +38,7 @@
     border-radius: 10px;
     overflow: auto;
     cursor: default; user-select: none;
+    position: relative;
 }
 .menu > ul{ background: inherit; }
 .menu ul.hidden{ display: none; }
@@ -179,7 +182,7 @@ li.expand > ul:not(:empty){
 }
 .controls li{
     margin: 6px 0; padding: 3px 5px 3px 6px;
-    border-radius: 2px;
+    border-radius: 6px;
     background: #fff;
     box-shadow: 0 2px 12px rgba(0,0,0,.13);
     transition: transform .1s ease;
