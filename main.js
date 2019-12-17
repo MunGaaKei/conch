@@ -8,7 +8,10 @@ let createWindow = () => {
 
     mainWindow = new BrowserWindow({
         width: 1000, height: 600, minWidth: 663, minHeight: 400,
-        frame: false, show: false, backgroundColor: '#f3f3f3'
+        frame: false, show: false, backgroundColor: '#f3f3f3',
+        webPreferences: {
+            nodeIntegration: true
+        }
     })
 
     mainWindow.once('ready-to-show', () => { mainWindow.show() })
@@ -20,6 +23,7 @@ let createWindow = () => {
     })
 )
 
+    // 打开控制台
     mainWindow.webContents.openDevTools()
 
     mainWindow.on('closed', function () { mainWindow = null })
@@ -37,13 +41,9 @@ app.on('ready', function () {
 })
 
 app.on('window-all-closed', function () {
-    if (process.platform !== 'darwin') {
-        app.quit()
-    }
+    process.platform !== 'darwin' && app.quit()
 })
 
 app.on('activate', function () {
-    if (mainWindow === null) {
-        createWindow()
-    }
+    mainWindow === null && createWindow()
 })
