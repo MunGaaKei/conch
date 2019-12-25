@@ -43,22 +43,24 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
 
 .content{
     display: flex;
-    flex-wrap: wrap;
     flex: 1 1 auto;
     position: relative;
     overflow: hidden;
 }
 .section{
     position: relative;
+    display: flex;
+    flex-direction: column;
     flex: 1 1 0;
 }
 .editor{
     box-sizing: border-box;
+    flex: 1 1 0;
     padding: 1em;
-    height: 100%;
     outline: none;
     overflow: hidden;
     transition: all .24s;
+    word-break: break-all;
 }
 .editor:hover{
     overflow: auto;
@@ -67,21 +69,28 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     background: #fff;
 }
 .title{
-    position: absolute; z-index: 1;
-    bottom: 0; right: 0;
+    display: flex;
+    align-items: center;
     padding: .32em 1em;
-    background: rgba(22,22,22,.1);
-    backdrop-filter: blur(2px);
+    background: rgba(255,255,255,.6);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     transition: all .24s;
-    pointer-events: none;
-}
-.section:focus-within .title{
-    opacity: 0;
 }
 
 .footer{
+    display: flex;
+    padding: 4px 12px;
+}
 
+.btn {
+    display: inline-flex;
+    padding: .26em .8em;
+    font-weight: 600;
+    transition: all .24s;
+    user-select: none;
+}
+.btn:hover {
+    filter: brightness(1.2);
 }
