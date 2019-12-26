@@ -8,7 +8,7 @@ let createWindow = () => {
 
     mainWindow = new BrowserWindow({
         width: 1000, height: 600, minWidth: 663, minHeight: 400,
-        frame: false, show: false, backgroundColor: '#f3f3f3',
+        frame: false, show: false, transparent: true,
         webPreferences: {
             nodeIntegration: true
         }

@@ -6,25 +6,36 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <link rel="stylesheet" media="screen" href="https://at.alicdn.com/t/font_1568367_9rektsyk4s5.css">
-    <link rel="stylesheet" media="screen" href="assets/css/reset.css">
+    <link rel="stylesheet" media="screen" href="assets/css/default.css">
 </head>
 <body>
 
 <header class="header">
-    <a class="nav iconfont icon-add" onclick="location.reload();"></a>
-    <a class="nav iconfont icon-workspace"></a>
+    <a class="nav iconfont icon-tree" href=""></a>
+    <div class="dropdown">
+        <a class="nav iconfont icon-add"></a>
+        <div class="context">
+            <a class="li">目录 1</a>
+            <a class="li">目录 2</a>
+        </div>
+    </div>
+    <a class="nav iconfont icon-color"></a>
     <nav>
-        <a class="nav iconfont icon-more"></a>
+        <div class="dropdown">
+            <a class="nav iconfont icon-more"></a>
+            <div class="context leftward">
+                <a class="li">
+                    <i class="iconfont icon-setting"></i>
+                    <span>设置</span>
+                </a>
+            </div>
+        </div>
         <a class="nav iconfont icon-subtract" data-act="min"></a>
         <a class="nav iconfont icon-close" data-act="close"></a>
     </nav>
 </header>
 
 <div class="content">
-
-    <section class="section">
-        <div class="editor" contenteditable></div>
-    </section>
 
     <section class="section">
         <div class="editor" contenteditable></div>
