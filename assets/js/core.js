@@ -1,15 +1,20 @@
 ;(function(win, doc){
 
-    const ipc = require('electron').ipcRenderer;
+    const IPC = require('electron').ipcRenderer;
+    const FS = require('fs');
     const $header = doc.querySelector('.header');
     const $editor = doc.querySelector('.editor');
 
-    let directHeader = act => {
+    let directive = act => {
         switch( act ){
-            case 'min': ipc.send('app-minimize'); break;
-            case 'close': ipc.send('app-close'); break;
+            case 'min': IPC.send('app-minimize'); break;
+            case 'close': IPC.send('app-close'); break;
             default: break;
         }
+    }
+
+    let readFiles = files => {
+        return FS.readFileSync(files, 'utf8');
     }
 
     $header.addEventListener('click', e => {
@@ -17,14 +22,16 @@
             tar = e.target;
         while( tar !== $header ){
             act = tar.dataset.act;
-            act && directHeader( act );
+            act && directive( act );
             tar = tar.parentNode;
         }
     });
 
+    doc.addEventListener('dragover', e => { e.preventDefault(); });
     $editor.addEventListener('drop', e => {
         e.preventDefault();
-        console.log(e);
+
+        $editor.innerHTML = readFiles(e.dataTransfer.files[0].path);
         
     });
 

@@ -1,35 +1,20 @@
 =====================
-    z-index list
+    data structure
 =====================
 
-## common
-
-500     .dialog
-
-600     .message
-
-
-## index
-1       .tab a.active
-        .menu footer
-        .menu .tools
-        .vertline
-
-10      .content header
-        .sider
-
-100     .menucontext
-
-## editor
-
-1       .drops
+ID              唯一
+Title           标题
+Author          作者
+Time            发布时间
+Type            类型
+(Abstract)      概要
+Status          状态
+Belongs         属于
 
 
-
-
-
-
-
+Menu            目录
+Chapter         章节
+Content         内容
 
 
 
@@ -65,3 +50,17 @@
 ##  字体默认大小
 ##  默认字体
 ##  纯净模式
+
+
+
+
+
+
+=====================
+      functions
+=====================
+
+提示
+即时笔记
+根据Template生成文件
+工具库定制
