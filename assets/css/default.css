@@ -116,6 +116,7 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
 
 .footer{
     display: flex;
+    flex-direction: row-reverse;
     padding: 4px 12px;
 }
 

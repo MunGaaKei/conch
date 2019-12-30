@@ -2,6 +2,8 @@
 
     const IPC = require('electron').ipcRenderer;
     const FS = require('fs');
+    const RL = require('readline');
+
     const $header = doc.querySelector('.header');
     const $editor = doc.querySelector('.editor');
 
@@ -13,8 +15,12 @@
         }
     }
 
-    let readFiles = files => {
-        return FS.readFileSync(files, 'utf8');
+    async function readTXT( files ) {
+        const stream = FS.createReadStream( files );
+        return RL.createInterface({
+            input: stream,
+            crlfDelay: Infinity
+        });
     }
 
     $header.addEventListener('click', e => {
@@ -30,8 +36,13 @@
     doc.addEventListener('dragover', e => { e.preventDefault(); });
     $editor.addEventListener('drop', e => {
         e.preventDefault();
-
-        $editor.innerHTML = readFiles(e.dataTransfer.files[0].path);
+        
+        readTXT( e.dataTransfer.files[0].path ).then( res => {
+            res.on('line', line => {
+                console.log(line);
+                
+            })
+        });
         
     });
 
