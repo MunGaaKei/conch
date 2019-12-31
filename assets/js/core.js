@@ -17,10 +17,19 @@
 
     async function readTXT( files ) {
         const stream = FS.createReadStream( files );
-        return RL.createInterface({
+        const lines = RL.createInterface({
             input: stream,
-            crlfDelay: Infinity
+            crlfDelay: Infinity,
+            autoNext: true
         });
+
+        let line,
+            content = '';
+        for await ( line of lines ){
+            content += `${line}<br>`;
+        }
+
+        return content
     }
 
     $header.addEventListener('click', e => {
@@ -38,11 +47,15 @@
         e.preventDefault();
         
         readTXT( e.dataTransfer.files[0].path ).then( res => {
-            res.on('line', line => {
-                console.log(line);
-                
-            })
+
+            $editor.innerHTML = res;
+
         });
+        
+    });
+    
+    // 监听键盘输入
+    $editor.addEventListener('input', e => {
         
     });
 

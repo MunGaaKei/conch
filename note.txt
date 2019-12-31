@@ -14,7 +14,6 @@ Belongs         属于
 
 Menu            目录
 Chapter         章节
-
 Content         内容
 
 
@@ -26,15 +25,6 @@ Content         内容
 
 1       article
 2       fiction
-
-
-
-
-
-
-
-
-
 
 
 
@@ -65,3 +55,13 @@ Content         内容
 即时笔记
 根据Template生成文件
 工具库定制
+
+
+
+
+
+# NOTE
+可支持文件类型：
+txt
+jpg\png
+[doc]

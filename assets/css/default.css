@@ -85,10 +85,11 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     flex: 1 1 0;
     overflow: auto;
     transition: all .24s;
+    text-align: center;
 }
 .editor{
+    display: inline-block;
     box-sizing: border-box;
-    margin: 0 auto;
     padding: 1em;
     width: 720px;
     min-height: 100%;
@@ -96,12 +97,14 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     outline: none;
     transition: all .24s;
     word-break: break-all;
+    text-align: left;
 }
-.editor:focus{
+.section:focus-within{
     background: rgba(255,255,255,.6);
 }
 .editor:empty:before{
-    
+    content: 'Start Writing ...';
+    opacity: .4;
 }
 .title{
     display: flex;
