@@ -97,14 +97,14 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     outline: none;
     transition: all .24s;
     word-break: break-all;
+    white-space: pre-wrap;
     text-align: left;
 }
 .section:focus-within{
     background: rgba(255,255,255,.6);
 }
 .editor:empty:before{
-    content: 'Start Writing ...';
-    opacity: .4;
+    
 }
 .title{
     display: flex;

@@ -15,7 +15,8 @@
         }
     }
 
-    async function readTXT( files ) {
+    // 读取文件
+    let readTXT = async files => {
         const stream = FS.createReadStream( files );
         const lines = RL.createInterface({
             input: stream,
@@ -29,7 +30,7 @@
             content += `${line}<br>`;
         }
 
-        return content
+        return content;
     }
 
     $header.addEventListener('click', e => {
@@ -45,18 +46,24 @@
     doc.addEventListener('dragover', e => { e.preventDefault(); });
     $editor.addEventListener('drop', e => {
         e.preventDefault();
+        console.log(e);
         
-        readTXT( e.dataTransfer.files[0].path ).then( res => {
+            readTXT( e.dataTransfer.files[0].path ).then( res => {
 
-            $editor.innerHTML = res;
-
-        });
-        
+                $editor.innerHTML = res;
+    
+            });
     });
     
     // 监听键盘输入
-    $editor.addEventListener('input', e => {
-        
+    $editor.addEventListener('keydown', e => {
+        switch( e.keyCode ){
+            case 9:// tab
+                e.preventDefault();
+                doc.execCommand('insertHTML', doc.getSelection(), ' '.repeat(4));
+                break;
+            default: break;
+        }
     });
 
 })(window, document);
