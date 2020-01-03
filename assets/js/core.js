@@ -5,14 +5,22 @@
     const RL = require('readline');
 
     const $header = doc.querySelector('.header');
-    const $editor = doc.querySelector('.editor');
+    const $content = doc.querySelector('.content');
 
+    let WORKSPACE = [];
+
+    // 指令
     let directive = act => {
         switch( act ){
             case 'min': IPC.send('app-minimize'); break;
             case 'close': IPC.send('app-close'); break;
             default: break;
         }
+    }
+
+    // 打开文件
+    let open = (id, path) => {
+
     }
 
     // 读取文件
@@ -44,21 +52,21 @@
     });
 
     doc.addEventListener('dragover', e => { e.preventDefault(); });
-    $editor.addEventListener('drop', e => {
+    doc.addEventListener('drop', e => {
         e.preventDefault();
-        console.log(e);
+        console.log(e.dataTransfer.files[0]);
         
-            readTXT( e.dataTransfer.files[0].path ).then( res => {
+        readTXT( e.dataTransfer.files[0].path ).then( res => {
 
-                $editor.innerHTML = res;
-    
-            });
+            console.log(res);
+
+        });
     });
     
     // 监听键盘输入
-    $editor.addEventListener('keydown', e => {
+    doc.addEventListener('keydown', e => {
         switch( e.keyCode ){
-            case 9:// tab
+            case 9: // tab
                 e.preventDefault();
                 doc.execCommand('insertHTML', doc.getSelection(), ' '.repeat(4));
                 break;

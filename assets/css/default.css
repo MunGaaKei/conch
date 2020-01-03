@@ -23,8 +23,9 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     position: sticky; z-index: 100;
     top: 0;
     display: flex;
-    flex-wrap: wrap;
     padding: 0 16px;
+    white-space: nowrap;
+    user-select: none;
     -webkit-app-region: drag;
 }
 .header > nav {
@@ -33,6 +34,9 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     -webkit-app-region: no-drag;
 }
 .nav{
+    display: flex;
+    align-items: center;
+    overflow: hidden;
     padding: 4px 8px;
     -webkit-app-region: no-drag;
 }
@@ -44,9 +48,34 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     position: relative;
     display: flex;
 }
+.tabs {
+    flex: 1 1 0;
+    width: 0;
+    text-overflow: ellipsis;
+}
+.tabs span {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.nav.tab{ font-weight: 600; }
+.tgl-close {
+    margin-left: 8px;
+    width: 8px; height: 8px;
+    flex-shrink: 0;
+    background-color: #ff5a5a;
+    border-radius: 8px;
+    transform: scale(0);
+    transition: all .12s;
+}
+.nav:hover > .tgl-close,
+.li:hover > .tgl-close {
+    transform: scale(1);
+}
 .context{
     display: none;
     position: absolute;
+    z-index: 1;
     left: 0; top: 100%;
     padding: 4px 0;
     white-space: nowrap;
@@ -56,12 +85,15 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     border-radius: 0 0 2px 2px;
     user-select: none;
 }
-.leftward{
-    left: auto; right: 0;
+.leftward{ left: auto; right: 0; }
+.upward{
+    top: auto; bottom: 100%;
+    box-shadow: 0 -3px 6px rgba(0, 0, 0, .05);
 }
 .li{
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 4px 12px;
 }
 .li:hover{
@@ -104,7 +136,9 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     background: rgba(255,255,255,.6);
 }
 .editor:empty:before{
-    
+    content: '干净的一张白纸';
+    opacity: .4;
+    font-weight: 600;
 }
 .title{
     display: flex;
@@ -120,16 +154,30 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
 .footer{
     display: flex;
     flex-direction: row-reverse;
-    padding: 4px 12px;
+    padding: 0 16px;
+    white-space: nowrap;
 }
 
 .btn {
+    position: relative;
     display: inline-flex;
-    padding: .26em .8em;
+    padding: 6px 12px;
     font-weight: 600;
     transition: all .24s;
     user-select: none;
 }
-.btn:hover {
-    filter: brightness(1.2);
+.btn > span {
+    position: relative; z-index: 1;
+}
+.btn:before{
+    content: '\20';
+    position: absolute;
+    left: 8px; bottom: 16px;
+    width: 12px; height: 12px;
+    border-radius: 12px;
+    background: rgba(93, 255, 183, 0.5);
+    transition: all .24s;
+}
+.btn:hover:before{
+    transform: translate(8px, 6px) scale(1.5);
 }

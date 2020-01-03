@@ -13,8 +13,23 @@
 <header class="header">
     <a class="nav iconfont icon-close" data-act="close"></a>
     <a class="nav iconfont icon-subtract" data-act="min"></a>
+    <div class="dropdown tabs">
+        <a class="nav tab">
+            <span>未命名</span>
+            <i class="tgl-close"></i>
+        </a>
+        <div class="context">
+            <a class="li tab">
+                <span>文件 A</span>
+                <i class="tgl-close"></i>
+            </a>
+            <a class="li tab">
+                <span>文件名字很长 B</span>
+                <i class="tgl-close"></i>
+            </a>
+        </div>
+    </div>
     <nav>
-        <a class="nav iconfont icon-tree" href=""></a>
         <div class="dropdown">
             <a class="nav iconfont icon-add"></a>
             <div class="context leftward">
@@ -22,15 +37,8 @@
                 <a class="li">目录 2</a>
             </div>
         </div>
-        <div class="dropdown">
-            <a class="nav iconfont icon-more"></a>
-            <div class="context leftward">
-                <a class="li">
-                    <i class="iconfont icon-setting"></i>
-                    <span>设置</span>
-                </a>
-            </div>
-        </div>
+        <a class="nav iconfont icon-setting" href=""></a>
+        <a class="nav iconfont icon-more" href=""></a>
     </nav>
 </header>
 
@@ -43,7 +51,7 @@
 </div>
 
 <footer class="footer">
-    <a class="btn">保存</a>
+    <a class="btn"><span>保存</span></a>
 </footer>
 
 <script src="assets/js/core.js"></script>
