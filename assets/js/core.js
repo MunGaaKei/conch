@@ -10,10 +10,11 @@
     let WORKSPACE = [];
 
     // 指令
-    let directive = act => {
+    let directive = ( act = '', context ) => {
         switch( act ){
             case 'min': IPC.send('app-minimize'); break;
             case 'close': IPC.send('app-close'); break;
+            case 'save': break;
             default: break;
         }
     }
@@ -46,7 +47,7 @@
             tar = e.target;
         while( tar !== $header ){
             act = tar.dataset.act;
-            act && directive( act );
+            act && directive( act, $header );
             tar = tar.parentNode;
         }
     });

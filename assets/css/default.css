@@ -59,6 +59,9 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     text-overflow: ellipsis;
 }
 .nav.tab{ font-weight: 600; }
+.tabs .context {
+    max-width: 100%;
+}
 .tgl-close {
     margin-left: 8px;
     width: 8px; height: 8px;
@@ -76,6 +79,8 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     display: none;
     position: absolute;
     z-index: 1;
+    box-sizing: border-box;
+    max-height: calc(100vh - 100%);
     left: 0; top: 100%;
     padding: 4px 0;
     white-space: nowrap;
@@ -84,6 +89,7 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     backdrop-filter: blur(10px);
     border-radius: 0 0 2px 2px;
     user-select: none;
+    overflow: hidden;
 }
 .leftward{ left: auto; right: 0; }
 .upward{
