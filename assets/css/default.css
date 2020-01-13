@@ -1,6 +1,6 @@
 html, body{
     --color: #212121;
-    --background: #f3f3f3;
+    --background: #e6e6e6;
 }
 
 article,aside,dialog,footer,header,section,footer,nav,figure,menu,img,video,audio{ display: block; }
@@ -23,7 +23,7 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     position: sticky; z-index: 100;
     top: 0;
     display: flex;
-    padding: 0 16px;
+    padding: 8px 6px;
     white-space: nowrap;
     user-select: none;
     -webkit-app-region: drag;
@@ -37,12 +37,17 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     display: flex;
     align-items: center;
     overflow: hidden;
-    padding: 4px 8px;
+    margin: 0 2px;
+    padding: 2px 6px;
+    border-radius: 2px;
     -webkit-app-region: no-drag;
 }
 .nav:hover,
 .dropdown:hover > .nav{
-    background: rgba(255, 255, 255, .6);
+    background: rgba(255, 255, 255, .86);
+}
+.dropdown:hover > .nav{
+    border-radius: 2px 2px 0 0;
 }
 .dropdown{
     position: relative;
@@ -58,7 +63,10 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.nav.tab{ font-weight: 600; }
+.nav.tab{
+    padding: 2px 8px;
+    font-weight: 600;
+}
 .tabs .context {
     max-width: 100%;
 }
@@ -81,17 +89,20 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     z-index: 1;
     box-sizing: border-box;
     max-height: calc(100vh - 100%);
-    left: 0; top: 100%;
+    left: 2px; top: 100%;
+    margin-top: -1px;
     padding: 4px 0;
     white-space: nowrap;
-    background: rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, .86);
     box-shadow: 0 3px 3px rgba(0, 0, 0, .05);
     backdrop-filter: blur(10px);
     border-radius: 0 0 2px 2px;
     user-select: none;
     overflow: hidden;
+    -webkit-app-region: no-drag;
 }
-.leftward{ left: auto; right: 0; }
+.context:empty{ display: none !important; }
+.leftward{ left: auto; right: 2px; }
 .upward{
     top: auto; bottom: 100%;
     box-shadow: 0 -3px 6px rgba(0, 0, 0, .05);
@@ -100,16 +111,10 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 4px 12px;
-}
-.li:hover{
-    background: rgba(255,255,255,.25);
+    padding: 4px 8px;
 }
 .dropdown:hover > .context {
     display: block;
-}
-.context .iconfont{
-    margin: 0 8px 0 0;
 }
 
 .content{
@@ -121,6 +126,9 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
 .section{
     position: relative;
     flex: 1 1 0;
+    margin: auto;
+    height: 100%;
+    max-height: 720px;
     overflow: auto;
     transition: all .24s;
     text-align: center;
@@ -129,39 +137,27 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     display: inline-block;
     box-sizing: border-box;
     padding: 1em;
-    width: 720px;
     min-height: 100%;
-    max-width: 100%;
+    width: 100%;
+    max-width: 720px;
     outline: none;
     transition: all .24s;
     word-break: break-all;
     white-space: pre-wrap;
     text-align: left;
 }
-.section:focus-within{
-    background: rgba(255,255,255,.6);
-}
 .editor:empty:before{
     content: '干净的一张白纸';
     opacity: .4;
     font-weight: 600;
 }
-.title{
-    display: flex;
-    align-items: center;
-    padding: .32em 1em;
-    background: rgba(255,255,255,.6);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    transition: all .24s;
-}
 
 .footer{
     display: flex;
     flex-direction: row-reverse;
-    padding: 0 16px;
+    padding: 4px 6px;
     white-space: nowrap;
+    -webkit-app-region: drag;
 }
 
 .btn {
@@ -171,6 +167,7 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     font-weight: 600;
     transition: all .24s;
     user-select: none;
+    -webkit-app-region: no-drag;
 }
 .btn > span {
     position: relative; z-index: 1;

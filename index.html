@@ -11,27 +11,26 @@
 <body>
 
 <header class="header">
-    <a class="nav iconfont icon-close" data-act="close"></a>
+    <a class="nav iconfont icon-close" data-act="exit"></a>
     <a class="nav iconfont icon-subtract" data-act="min"></a>
-    <div class="dropdown tabs">
+    <div class="dropdown tabs" data-act="dropdown">
         <a class="nav tab">
             <span>未命名</span>
-            <i class="tgl-close"></i>
+            <i class="tgl-close" data-act="close"></i>
         </a>
         <div class="context">
             <a class="li tab">
                 <span>文件 A</span>
-                <i class="tgl-close"></i>
+                <i class="tgl-close" data-act="close"></i>
             </a>
             <a class="li tab">
                 <span>文件名字很长 B</span>
-                <i class="tgl-close"></i>
+                <i class="tgl-close" data-act="close"></i>
             </a>
         </div>
     </div>
     <nav>
-        <a class="nav iconfont icon-save" data-act="save"></a>
-        <div class="dropdown">
+        <div class="dropdown" data-act="dropdown">
             <a class="nav iconfont icon-add"></a>
             <div class="context leftward">
                 <a class="li">目录 1</a>
@@ -46,7 +45,7 @@
 <div class="content">
 
     <section class="section">
-        <div class="editor" contenteditable></div>
+        <div id="editor-1" class="editor" contenteditable></div>
     </section>
 
 </div>
