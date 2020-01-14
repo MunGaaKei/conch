@@ -1,9 +1,10 @@
 html, body{
     --color: #212121;
     --background: #e6e6e6;
+    transition: all .24s;
 }
 
-article,aside,dialog,footer,header,section,footer,nav,figure,menu,img,video,audio{ display: block; }
+article,aside,dialog,footer,header,section,footer,nav,figure,menu,img,video,audio{ display: block; margin: 0; padding: 0; }
 body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dialog,dl,dt,dd,ul,ol,li,iframe,pre,form,figure,fieldset,legend,button,input,textarea,th,td{ margin: 0; padding: 0; border: 0; }
 a{ color: inherit; text-decoration: none; cursor: pointer; transition: all .24s; }
 b,strong{ font-weight: 700; }
@@ -53,36 +54,6 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     position: relative;
     display: flex;
 }
-.tabs {
-    flex: 1 1 0;
-    width: 0;
-    text-overflow: ellipsis;
-}
-.tabs span {
-    flex: 1 1 auto;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.nav.tab{
-    padding: 2px 8px;
-    font-weight: 600;
-}
-.tabs .context {
-    max-width: 100%;
-}
-.tgl-close {
-    margin-left: 8px;
-    width: 8px; height: 8px;
-    flex-shrink: 0;
-    background-color: #ff5a5a;
-    border-radius: 8px;
-    transform: scale(0);
-    transition: all .12s;
-}
-.nav:hover > .tgl-close,
-.li:hover > .tgl-close {
-    transform: scale(1);
-}
 .context{
     display: none;
     position: absolute;
@@ -103,10 +74,6 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
 }
 .context:empty{ display: none !important; }
 .leftward{ left: auto; right: 2px; }
-.upward{
-    top: auto; bottom: 100%;
-    box-shadow: 0 -3px 6px rgba(0, 0, 0, .05);
-}
 .li{
     display: flex;
     align-items: center;
@@ -117,11 +84,51 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     display: block;
 }
 
-.content{
-    display: flex;
+.body{
     flex: 1 1 auto;
     position: relative;
+    transition: all .24s;
+}
+.content{
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    display: flex;
+    transition: all .24s;
+}
+.sidebar{
+    position: relative;
+    box-sizing: border-box;
+    padding: 20px 0;
+    max-width: 100%;
+    min-height: 100%;
+    width: 180px;
+    min-width: 120px;
+    overflow: auto;
+}
+.menu .li:hover{
+    background-color: rgba(0, 0, 0, .15);
+}
+.menu .li.active{
+    opacity: 1;
+    background-color: rgba(255, 255, 255, .5);
+}
+.menu .li > b {
+    flex: 1 1 auto;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.tgl-close{
+    margin-left: 8px;
+    width: 8px; height: 8px;
+    flex-shrink: 0;
+    background-color: #ff5a5a;
+    border-radius: 8px;
+    transform: scale(0);
+    transition: all .12s;
+}
+.li:hover > .tgl-close {
+    transform: scale(1);
 }
 .section{
     position: relative;
@@ -130,7 +137,6 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     height: 100%;
     max-height: 720px;
     overflow: auto;
-    transition: all .24s;
     text-align: center;
 }
 .editor{
@@ -141,10 +147,10 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     width: 100%;
     max-width: 720px;
     outline: none;
-    transition: all .24s;
     word-break: break-all;
     white-space: pre-wrap;
     text-align: left;
+    transition: all .24s;
 }
 .editor:empty:before{
     content: '干净的一张白纸';

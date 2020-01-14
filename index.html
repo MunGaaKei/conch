@@ -5,7 +5,7 @@
     <title>conch</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <link rel="stylesheet" media="screen" href="https://at.alicdn.com/t/font_1568367_9rektsyk4s5.css">
+    <link rel="stylesheet" media="screen" href="https://at.alicdn.com/t/font_1568367_lik9d88kozl.css">
     <link rel="stylesheet" media="screen" href="assets/css/default.css">
 </head>
 <body>
@@ -13,28 +13,13 @@
 <header class="header">
     <a class="nav iconfont icon-close" data-act="exit"></a>
     <a class="nav iconfont icon-subtract" data-act="min"></a>
-    <div class="dropdown tabs" data-act="dropdown">
-        <a class="nav tab">
-            <span>未命名</span>
-            <i class="tgl-close" data-act="close"></i>
-        </a>
-        <div class="context">
-            <a class="li tab">
-                <span>文件 A</span>
-                <i class="tgl-close" data-act="close"></i>
-            </a>
-            <a class="li tab">
-                <span>文件名字很长 B</span>
-                <i class="tgl-close" data-act="close"></i>
-            </a>
-        </div>
-    </div>
+    <a class="nav iconfont icon-sidebar" data-act="sidebar"></a>
     <nav>
         <div class="dropdown" data-act="dropdown">
             <a class="nav iconfont icon-add"></a>
             <div class="context leftward">
-                <a class="li">目录 1</a>
-                <a class="li">目录 2</a>
+                <a class="li">关于</a>
+                <a class="li">版本号</a>
             </div>
         </div>
         <a class="nav iconfont icon-setting" href=""></a>
@@ -42,12 +27,30 @@
     </nav>
 </header>
 
-<div class="content">
+<div class="body">
+    <div class="content">
+        <aside class="sidebar">
+            <menu class="menu">
+                <a class="li active">
+                    <b>未命名</b>
+                    <i class="tgl-close"></i>
+                </a>
+                <a class="li">
+                    <b>挪威的森林</b>
+                    <i class="tgl-close"></i>
+                </a>
+                <a class="li">
+                    <b>Gone with the wind</b>
+                    <i class="tgl-close"></i>
+                </a>
+            </menu>
+        </aside>
+    
+        <section class="section">
+            <div id="editor-1" class="editor" contenteditable></div>
+        </section>
 
-    <section class="section">
-        <div id="editor-1" class="editor" contenteditable></div>
-    </section>
-
+    </div>
 </div>
 
 <footer class="footer">

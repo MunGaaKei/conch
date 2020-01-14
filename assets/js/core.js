@@ -5,41 +5,40 @@
     const RL = require('readline');
 
     const $header = doc.querySelector('.header');
-    const $tabs = doc.querySelector('.tabs');
     const $content = doc.querySelector('.content');
 
     let WORKSPACE = win.localStorage.tabs;
     WORKSPACE = WORKSPACE? JSON.parse(WORKSPACE): {
-        0: {
-            path: undefined,
+        '0': {
             title: '未命名',
-            saved: true
+            path: undefined,
+            saved: true,
+            create: '2020-01-01',
+            active: false,
+            content: ''
         },
-        // 1: {
-        //     path: 'D:/1AN/conch/documents/demo.txt',
-        //     title: '未命名',
-        //     saved: true
-        // },
-        // 2: {
-        //     path: 'D:/1AN/conch/documents/demo.docs',
-        //     title: '未命名的文档',
-        //     saved: true
-        // }
+        '1': {
+            title: '挪威的森林',
+            path: 'D:/1AN/conch/documents/untitled.docx',
+            saved: true,
+            create: '2020-01-02',
+            active: false
+        }
     };
 
 
-    // 监听 WORKSPACE 变化改变 tabs 状态
-    let monitor = files => {
-        let handler = new Proxy( files, {
-            set: ( target, prop, val ) => {
-                console.log( target, prop, val );
-                target[prop] = val;
-                return true;
-            }
-        });
 
-        handler[2] = 123;
-    }
+    let MENUS = new Proxy( WORKSPACE, {
+        set: ( tar, prop, val ) => {
+            if ( tar[prop] ){
+                console.log('exit');
+                
+            }
+            tar[ prop ] = val;
+            return true;
+        }
+    });
+    
 
     // 指令
     let directive = ( act = '', tar ) => {
@@ -49,6 +48,7 @@
                 // 检查是否还有文档未保存
                 IPC.send('app-close');
                 break;
+            case 'sidebar': sidebar(); break;
             default: break;
         }
     }
@@ -82,6 +82,18 @@
     // 保存文件
     let save = ( id, content ) => {
 
+    }
+
+    // toggle 侧边栏目录
+    let sidebar = () => {
+        let $sidebar = doc.querySelector('.sidebar');
+        let rect = $sidebar.getBoundingClientRect();
+        $content.style.cssText = rect.left === 0? `left:-${rect.width}px;`: '';
+    }
+
+    // 更新菜单栏
+    let updateMenu = () => {
+        
     }
 
     $header.addEventListener('click', e => {
@@ -127,15 +139,21 @@
                     
                 }
                 break;
+            case 66:    // toggle sidebar: ctrl+b
+                e.ctrlKey && sidebar();
+                break;
             default: break;
         }
     });
 
-    
 
 
-    monitor( WORKSPACE );
-
-
+    MENUS[ '2' ] = {
+        title: 'Gone with the wind',
+        path: 'D:/1AN/conch/documents/untitled.txt',
+        saved: true,
+        create: '2020-01-03',
+        active: false
+    };
 
 })(window, document);
