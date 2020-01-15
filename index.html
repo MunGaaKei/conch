@@ -5,7 +5,7 @@
     <title>conch</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <link rel="stylesheet" media="screen" href="https://at.alicdn.com/t/font_1568367_lik9d88kozl.css">
+    <link rel="stylesheet" media="screen" href="https://at.alicdn.com/t/font_1568367_67y4lmlct7d.css">
     <link rel="stylesheet" media="screen" href="assets/css/default.css">
 </head>
 <body>
@@ -15,14 +15,15 @@
     <a class="nav iconfont icon-subtract" data-act="min"></a>
     <a class="nav iconfont icon-sidebar" data-act="sidebar"></a>
     <nav>
+        <a class="nav iconfont icon-task" data-act="task"></a>
         <div class="dropdown" data-act="dropdown">
             <a class="nav iconfont icon-add"></a>
             <div class="context leftward">
-                <a class="li">关于</a>
-                <a class="li">版本号</a>
+                <a>关于</a>
+                <a>版本号</a>
             </div>
         </div>
-        <a class="nav iconfont icon-setting" href=""></a>
+        <a class="nav iconfont icon-setting" data-act="setting"></a>
         <a class="nav iconfont icon-more" href=""></a>
     </nav>
 </header>
@@ -30,32 +31,76 @@
 <div class="body">
     <div class="content">
         <aside class="sidebar">
-            <menu class="menu">
-                <a class="li active">
-                    <b>未命名</b>
-                    <i class="tgl-close"></i>
-                </a>
-                <a class="li">
-                    <b>挪威的森林</b>
-                    <i class="tgl-close"></i>
-                </a>
-                <a class="li">
-                    <b>Gone with the wind</b>
-                    <i class="tgl-close"></i>
-                </a>
-            </menu>
+            <ul class="menu">
+                <li>
+                    <a class="li">
+                        <b>未命名</b>
+                        <i class="tgl-close"></i>
+                    </a>
+                </li>
+                <li>
+                    <a class="li">
+                        <b>挪威的森林</b>
+                        <i class="tgl-close"></i>
+                    </a>
+                    <ul class="active">
+                        <li>
+                            <a class="li" data-id="1">
+                                <b>第一章</b>
+                                <i class="tgl-close"></i>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a class="li">
+                                        <b>第一节</b>
+                                        <i class="tgl-close"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="li">
+                                <b>第二章</b>
+                                <i class="tgl-close"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="li">
+                        <b>飘 Gone with the wind</b>
+                        <i class="tgl-close"></i>
+                    </a>
+                </li>
+            </ul>
         </aside>
     
         <section class="section">
-            <div id="editor-1" class="editor" contenteditable></div>
+            <div class="editor" contenteditable></div>
         </section>
 
     </div>
+
+    <div class="confirm">
+        <header>关闭前，请确认以下文件尚未保存：</header>
+        <p>挪威的森林</p>
+        <p>未命名</p>
+        <footer>
+            <a class="btn dimed">取消</a>
+            <a class="btn">关闭并保存</a>
+        </footer>
+    </div>
+
 </div>
 
-<footer class="footer">
+<div class="contextmenu">
+    <a data-act="save">保存</a>
+    <a data-act="remove">删除</a>
+</div>
+
+<!-- <footer class="footer">
     <a class="btn"><span>保存</span></a>
-</footer>
+</footer> -->
 
 <script src="assets/js/core.js"></script>
 </body>
