@@ -30,7 +30,7 @@
                 type: 1,
                 create: '2020-01-03',
                 files: [{
-                    title: '未命名',
+                    title: '第一节',
                     path: 'D:/1AN/conch/documents/挪威的森林/第一章/第一节.txt',
                     type: 0,
                     editor: 'pto',
@@ -72,16 +72,21 @@
 
 
     // 初始化侧边栏目录
-    let initMenus = ( files = {} ) => {
+    let generateMenu = ( files = {} ) => {
         let html = '';
         let keys = Object.keys(files);
         let o;
         for( k of keys ){
             o = files[k];
-            
-            if( o.active ) ActiveTABS[k] = { saved: true };
+            html += `<li>
+                        <a class="li" data-id="${k}">
+                            <b>${o.title}</b>
+                            <i class="tgl-close"></i>
+                        </a>`
+                + (o.files? `<ul>${ generateMenu(o.files) }</ul></li>`: `</li>`);
+            if( o.active ) ActiveTABS[k] = { path: o.path, saved: true };
         }
-        $menu.innerHTML = html;
+        return html;
     }
     
     
@@ -115,13 +120,8 @@
             crlfDelay: Infinity,
             autoNext: true
         });
-
-        let line,
-            content = '';
-        for await ( line of lines ){
-            content += `${line}<br>`;
-        }
-
+        let line, content = '';
+        for await ( line of lines ) content += `${line}<br>`;
         return content;
     }
 
@@ -141,7 +141,9 @@
     let operateFile = ( act, id ) => {
         switch( act - 0 ){
             case 0: // save
-                console.log('save');
+                console.log('save'+ id);
+                break;
+            case 9: // remove
                 break;
             default: break;
         }
@@ -159,8 +161,8 @@
         $contextmenu.innerHTML = html;
         
         let rect = $contextmenu.getBoundingClientRect();
-        let css = ( x + rect.width > win.innerWidth )? `right:${win.innerWidth - x}px;`: `left:${x}px;`;
-        css += ( y + rect.height > win.innerHeight )? `bottom:${win.innerHeight - y}px;`: `top:${y}px;`;
+        let css = ( x + rect.width > win.innerWidth )? `left:auto;right:${win.innerWidth - x}px;`: `left:${x}px;`;
+        css += ( y + rect.height > win.innerHeight )? `top:auto;bottom:${win.innerHeight - y}px;`: `top:${y}px;`;
         $contextmenu.style.cssText = `visibility:unset;${css}`;
     }
 
@@ -228,6 +230,23 @@
             tar = tar.parentNode;
         }
     });
+
+    // 内容区右键事件
+    $content.addEventListener('contextmenu', e => {
+        let tar = e.target;
+        while( tar !== $content ){
+            if( tar.classList.contains('editor') ){
+                contextMenu( 0, [
+                    { act: 0, title: '保存' },
+                    { act: 1, title: '打开所在目录' },
+                    { act: 2, title: '复制' },
+                    { act: 3, title: '粘贴' },
+                    { act: 8, title: '关闭' }
+                ], e.clientX, e.clientY );
+            }
+            tar = tar.parentNode;
+        }
+    });
     
     // 监听键盘输入
     $content.addEventListener('keydown', e => {
@@ -260,7 +279,7 @@
     });
 
 
-    // initMenus( WORKSPACE );
+    $menu.innerHTML = generateMenu( WORKSPACE );
 
 
 })(window, document);
