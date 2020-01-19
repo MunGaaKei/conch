@@ -1,6 +1,8 @@
 ;((win, doc) => {
 
-    const IPC = require('electron').ipcRenderer;
+    const ELECTRON = require('electron');
+    const IPC = ELECTRON.ipcRenderer;
+    const SHELL = ELECTRON.shell;
     const FS = require('fs');
     const RL = require('readline');
 
@@ -11,32 +13,42 @@
 
     let WORKSPACE = win.localStorage.WORKSPACE;
     WORKSPACE = WORKSPACE? JSON.parse(WORKSPACE): {
-        '0': {
+        'untitled': {
             title: '未命名',
             path: undefined,
-            type: 0,
-            editor: 'pto',
-            create: '2020-01-01',
-            active: true
+            editor: 0,
+            type: 2,
+            create: '2020-01-01'
         },
-        '1': {
+        'norwegian': {
             title: '挪威的森林',
             path: 'D:/1AN/conch/documents/挪威的森林/',
-            type: 1,
-            create: '2020-01-02',
-            files: [{
-                title: '第一章',
-                path: 'D:/1AN/conch/documents/挪威的森林/第一章/',
-                type: 1,
-                create: '2020-01-03',
-                files: [{
-                    title: '第一节',
-                    path: 'D:/1AN/conch/documents/挪威的森林/第一章/第一节.txt',
-                    type: 0,
-                    editor: 'pto',
-                    create: '2020-01-03'
-                }]
-            }]
+            files: ['chapter1'],
+            type: 1
+        },
+        'chapter1': {
+            title: '第一章',
+            path: 'D:/1AN/conch/documents/挪威的森林/第一章/',
+            files: ['section1', 'section2'],
+            parent: 'norwegian',
+            type: 1
+        },
+        'section1': {
+            title: '第一节',
+            path: 'D:/1AN/conch/documents/挪威的森林/第一章/第一节.txt',
+            editor: 0,
+            time: '2020-01-03',
+            active: true,
+            parent: 'chapter1',
+            type: 2
+        },
+        'section2': {
+            title: '第二节',
+            path: 'D:/1AN/conch/documents/挪威的森林/第一章/第一节.txt',
+            editor: 0,
+            time: '2020-01-03',
+            parent: 'chapter1',
+            type: 2
         }
     };
 
@@ -45,6 +57,15 @@
             // add editor
             // activate menu li
             // add console handler
+            console.log(prop, val);
+            
+            if( val ){
+                
+                
+            } else {
+
+            }
+            
             return true;
         }
     });
@@ -72,21 +93,25 @@
 
 
     // 初始化侧边栏目录
-    let generateMenu = ( files = {} ) => {
+    let generateMenu = ( files = {}, sub = true ) => {
         let html = '';
-        let keys = Object.keys(files);
-        let o;
+        let keys = sub? files: Object.keys( files );
+        let o, k;
+        
         for( k of keys ){
-            o = files[k];
+            o = WORKSPACE[ k ];
+            if( !sub && o.parent ) continue;
+
             html += `<li>
-                        <a class="li" data-id="${k}">
+                        <a class="li" data-key="${k}" data-type="${o.type}">
                             <b>${o.title}</b>
                             <i class="tgl-close"></i>
-                        </a>`
-                + (o.files? `<ul>${ generateMenu(o.files) }</ul></li>`: `</li>`);
-            if( o.active ) ActiveTABS[k] = { path: o.path, saved: true };
+                        </a>
+                    ${o.files? `<ul>${generateMenu(o.files)}</ul></li>`: `</li>`}`;
+            if( o.type === 2 && o.active ) ActiveTABS[k] = true;
         }
-        return html;
+        if( sub ) return html;
+        $menu.innerHTML = html;
     }
     
     
@@ -142,6 +167,9 @@
         switch( act - 0 ){
             case 0: // save
                 console.log('save'+ id);
+                break;
+            case 8: // open folder
+                SHELL.showItemInFolder( WORKSPACE[id].path );
                 break;
             case 9: // remove
                 break;
@@ -209,7 +237,7 @@
                 if( $ul ){
                     $ul.classList.toggle( 'active' );
                 } else if( !tar.classList.contains('active') ) {
-                    // ActiveTABS[ tar.dataset.id ]
+                    // ActiveTABS[ tar.dataset.key ]
                 }
             }
             tar = tar.parentNode;
@@ -219,13 +247,14 @@
     $menu.addEventListener('contextmenu', e => {
         let tar = e.target;
         while( tar !== $menu ){
-            if( tar.classList.contains('li') ){
+            let type = tar.dataset.type - 0;
+            if( type ){
                 // 显示右键菜单
-                contextMenu( tar.dataset.id, [
-                    { act: 0, title: '保存' },
-                    { act: 1, title: '打开所在目录' },
-                    { act: 9, title: '移除' }
-                ], e.clientX, e.clientY);
+                let options = [];
+                type === 1 && options.push({ act: 1, title: '添加文本' }, { act: 1, title: '新建文件夹' });
+                type === 2 && options.push({ act: 0, title: '保存' });
+                options.push({ act: 8, title: '打开所在目录' }, { act: 9, title: '删除' });
+                contextMenu( tar.dataset.key, options, e.clientX, e.clientY);
             }
             tar = tar.parentNode;
         }
@@ -279,7 +308,8 @@
     });
 
 
-    $menu.innerHTML = generateMenu( WORKSPACE );
+    generateMenu( WORKSPACE, false );
 
+    ActiveTABS['section1'] = true;
 
 })(window, document);

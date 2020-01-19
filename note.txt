@@ -1,38 +1,24 @@
 =====================
-    data structure
+    Data Structure
 =====================
 
-ID              唯一
-Title           标题
-Author          作者
-Time            发布时间
-Type            类型
-(Abstract)      概要
-Status          状态
-Belongs         属于
+字段
 
-
-Menu            目录
-Chapter         章节
-Content         内容
-
-
+ID              类型        标识            timestamp + random string
+Title           String      标题
+Path            String      路径
+[Author]        String      作者
+Time            String      时间
+Type            Number      文件类型         1: folder      2: file
+Save            Boolean     状态            true: saved   false: unsaved
+Files           Array       所包含项
+Editor          Number      编辑器类型       0: plaintext-only   1: rich text
+Active          Boolean     是否在编辑状态   true: actived   false: disactived
+Parent          Boolean     是否所属文件夹
 
 
 =====================
-    article type
-=====================
-
-1       article
-2       fiction
-
-
-
-
-
-
-=====================
-      settings
+      Settings
 =====================
 
 ##  导出格式
@@ -48,7 +34,7 @@ Content         内容
 
 
 =====================
-      functions
+      Functions
 =====================
 
 提示
@@ -65,3 +51,4 @@ Content         内容
 txt
 jpg\png
 [doc]
+html

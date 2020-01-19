@@ -147,7 +147,7 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     height: auto;
 }
 .menu > li > ul {
-    font-size: 0.9em;
+    font-size: 0.86em;
 }
 .section{
     position: relative;
@@ -195,24 +195,21 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     position: absolute;
     z-index: 100;
     left: 100%; top: 100%;
-    padding: 4px;
+    padding: 4px 0;
     border-radius: 2px;
     background: rgba(255,255,255,.4);
     backdrop-filter: blur(12px);
     box-shadow: 0 0 12px rgba(0, 0, 0, .05);
     visibility: hidden;
     white-space: nowrap;
+    overflow: hidden;
 }
 .contextmenu > a {
     display: block;
     padding: 4px 8px;
-    border-radius: inherit;
 }
 .contextmenu > a:hover {
-    background-color: rgba(255,255,255,.4);
-}
-.contextmenu a[data-act="9"]:hover {
-    background-color: rgba(255, 162, 162, 0.4);
+    background-color: rgba(255,255,255,.5);
 }
 
 .footer{
