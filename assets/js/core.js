@@ -7,11 +7,14 @@
     const RL = require('readline');
 
     const $header = doc.querySelector('.header');
+    const $sidebar = doc.querySelector('.sidebar');
     const $menu = doc.querySelector('.menu');
     const $content = doc.querySelector('.content');
     const $contextmenu = doc.querySelector('.contextmenu');
+    const $confirm = doc.querySelector('.confirm');
+    
+    let { WORKSPACE, ACTIVETAB } = win.localStorage;
 
-    let WORKSPACE = win.localStorage.WORKSPACE;
     WORKSPACE = WORKSPACE? JSON.parse(WORKSPACE): {
         'untitled': {
             title: '未命名',
@@ -21,30 +24,29 @@
             create: '2020-01-01'
         },
         'norwegian': {
-            title: '挪威的森林',
-            path: 'D:/1AN/conch/documents/挪威的森林/',
+            title: '森林',
+            path: 'D:/Projects/conch/documents/挪威的森林/',
             files: ['chapter1'],
             type: 1
         },
         'chapter1': {
             title: '第一章',
-            path: 'D:/1AN/conch/documents/挪威的森林/第一章/',
+            path: 'D:/Projects/conch/documents/挪威的森林/第一章/',
             files: ['section1', 'section2'],
             parent: 'norwegian',
             type: 1
         },
         'section1': {
             title: '第一节',
-            path: 'D:/1AN/conch/documents/挪威的森林/第一章/第一节.txt',
+            path: 'D:/Projects/conch/documents/挪威的森林/第一章/第一节.txt',
             editor: 0,
             time: '2020-01-03',
-            active: true,
             parent: 'chapter1',
             type: 2
         },
         'section2': {
             title: '第二节',
-            path: 'D:/1AN/conch/documents/挪威的森林/第一章/第一节.txt',
+            path: 'D:/Projects/conch/documents/挪威的森林/第一章/第一节.txt',
             editor: 0,
             time: '2020-01-03',
             parent: 'chapter1',
@@ -52,46 +54,7 @@
         }
     };
 
-    let ActiveTABS = new Proxy( {}, {
-        set: ( tar, prop, val ) => {
-            // add editor
-            // activate menu li
-            // add console handler
-            console.log(prop, val);
-            
-            if( val ){
-                
-                
-            } else {
-
-            }
-            
-            return true;
-        }
-    });
-
-
-    let Menus = new Proxy( WORKSPACE, {
-        set: ( tar, prop, val ) => {
-            if ( val ){
-                if( tar[prop] ){
-                    // update
-
-                } else {
-                    // create
-
-                }
-                tar[ prop ] = val;
-            } else {
-                // delete
-                delete tar[ prop ];
-                ActiveTABS[ prop ] = null;
-            }
-            return true;
-        }
-    });
-
-
+    
     // 初始化侧边栏目录
     let generateMenu = ( files = {}, sub = true ) => {
         let html = '';
@@ -108,10 +71,34 @@
                             <i class="tgl-close"></i>
                         </a>
                     ${o.files? `<ul>${generateMenu(o.files)}</ul></li>`: `</li>`}`;
-            if( o.type === 2 && o.active ) ActiveTABS[k] = true;
         }
         if( sub ) return html;
         $menu.innerHTML = html;
+    }
+    
+    // 激活目录文件
+    let activateMenu = key => {
+        let $li = $menu.querySelector(`[data-key="${key}"]`);
+        $li && $li.classList.add( 'active' );
+        
+        // let $section = doc.createElement('SECTION');
+        // $section.dataset.id = key;
+        // $section.className = 'section';
+        // $section.innerHTML = `<div class="editor" contenteditable${ WORKSPACE[key].editor === 0? '="plaintext-only"></div>': '></div>' }`;
+
+        // $content.append( $section );
+    }
+
+    // 打开\关闭 模态框
+    let backdrop = $el => {
+        if( $el.classList.contains('active') ){
+            $el.classList.remove('in');
+            setTimeout(() => { $el.classList.remove('active'); }, 300);
+        } else {
+            $el.classList.add('active');
+            $el.offsetWidth;
+            $el.classList.add('in');
+        }
     }
     
     
@@ -122,6 +109,7 @@
             case 'min': IPC.send('app-minimize'); break;
             case 'exit':
                 // 检查是否还有文档未保存
+                // 保存 ACTIVETABS & WORKSPACE
                 IPC.send('app-close');
                 break;
             case 'sidebar': sidebar(); break;
@@ -157,9 +145,8 @@
 
     // toggle 侧边栏目录
     let sidebar = () => {
-        let $sidebar = doc.querySelector('.sidebar');
         let rect = $sidebar.getBoundingClientRect();
-        $content.style.cssText = rect.left === 0? `left:-${rect.width}px;`: '';
+        $content.style.cssText = rect.right <= win.innerWidth? `right:-${rect.width + 1}px;`: '';
     }
 
     // 操作文件
@@ -168,14 +155,21 @@
             case 0: // save
                 console.log('save'+ id);
                 break;
-            case 8: // open folder
+            case 7: // open folder
                 SHELL.showItemInFolder( WORKSPACE[id].path );
+                break;
+            case 8: // view file information
+
                 break;
             case 9: // remove
                 break;
             default: break;
         }
-        $contextmenu.style.cssText = `visibility:hidden;`;
+    }
+
+    // 确认框
+    let confirm = () => {
+
     }
 
     // 右键上下文菜单
@@ -188,18 +182,26 @@
         $contextmenu.dataset.id = id;
         $contextmenu.innerHTML = html;
         
+        backdrop( $contextmenu.parentNode );
         let rect = $contextmenu.getBoundingClientRect();
-        let css = ( x + rect.width > win.innerWidth )? `left:auto;right:${win.innerWidth - x}px;`: `left:${x}px;`;
-        css += ( y + rect.height > win.innerHeight )? `top:auto;bottom:${win.innerHeight - y}px;`: `top:${y}px;`;
-        $contextmenu.style.cssText = `visibility:unset;${css}`;
+        let css = ( x + rect.width > win.innerWidth )? `right:${win.innerWidth - x}px;`: `left:${x}px;`;
+        css += ( y + rect.height > win.innerHeight )? `bottom:${win.innerHeight - y}px;`: `top:${y}px;`;
+        $contextmenu.style.cssText = `${css}`;
     }
 
     // 右键菜单点击事件
     $contextmenu.addEventListener('click', e => {
-        e.stopPropagation();
         let tar = e.target;
         let act = tar.dataset.act;
         act && operateFile( act, $contextmenu.dataset.id );
+    });
+
+    // 确认框点击事件
+    $confirm.addEventListener('click', e => {
+        e.stopPropagation();
+        
+        let tar = e.target;
+        
     });
 
     // Header 按钮点击事件
@@ -238,7 +240,13 @@
                     $ul.classList.toggle( 'active' );
                 } else if( !tar.classList.contains('active') ) {
                     // ActiveTABS[ tar.dataset.key ]
+                    
                 }
+            }
+            if( tar.classList.contains('tgl-close') ){
+                backdrop( $confirm.parentNode );
+                tar = $menu;
+                break;
             }
             tar = tar.parentNode;
         }
@@ -253,7 +261,11 @@
                 let options = [];
                 type === 1 && options.push({ act: 1, title: '添加文本' }, { act: 1, title: '新建文件夹' });
                 type === 2 && options.push({ act: 0, title: '保存' });
-                options.push({ act: 8, title: '打开所在目录' }, { act: 9, title: '删除' });
+                options.push(
+                    { act: 7, title: '打开所在目录' },
+                    { act: 8, title: '详细信息' },
+                    { act: 9, title: '删除' }
+                );
                 contextMenu( tar.dataset.key, options, e.clientX, e.clientY);
             }
             tar = tar.parentNode;
@@ -296,20 +308,34 @@
                     
                 }
                 break;
-            case 66:    // toggle sidebar: ctrl+b
+            case 78:    // toggle sidebar: ctrl+n
                 e.ctrlKey && sidebar();
                 break;
             default: break;
         }
     });
 
-    doc.addEventListener('click', e => {
-        $contextmenu.style.cssText = `visibility:hidden;`;
+    // 侧边栏宽度拉伸
+    doc.querySelector('.widen').addEventListener('mousedown', e => {
+        console.log(e);
+        
     });
+
+    doc.body.addEventListener('click', e => {
+        let tar = e.target;
+        while( tar !== doc.body ){
+            tar.classList.contains('dismiss') && backdrop( tar );
+            tar = tar.parentNode;
+        }
+    }, false);
 
 
     generateMenu( WORKSPACE, false );
 
-    ActiveTABS['section1'] = true;
+    activateMenu( 'untitled' );
+    
+
+
+
 
 })(window, document);

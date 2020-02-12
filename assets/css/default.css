@@ -14,7 +14,7 @@ input:-webkit-autofill{ background-color: initial; }
 ul,li,ol{ list-style: none; }
 img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transition: all .24s; }
 
-::selection{ background-color: #cee3f8 !important; color: var(--color) !important; }
+::selection{ background-color: #ffd57b !important; color: var(--color) !important; }
 ::-webkit-scrollbar{ width: 4px; height: 4px; }
 ::-webkit-scrollbar-button,::-webkit-scrollbar-corner{ display: none; }
 ::-webkit-scrollbar-track{ background-color: inherit; }
@@ -42,6 +42,9 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     padding: 2px 6px;
     border-radius: 2px;
     -webkit-app-region: no-drag;
+}
+.nav.active{
+    color: #ff5a5a;
 }
 .nav:hover,
 .dropdown:hover > .nav{
@@ -94,14 +97,28 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     transition: all .24s;
 }
 .sidebar{
+    order: 3;
     position: relative;
     box-sizing: border-box;
     padding: 20px 0;
     max-width: 100%;
     min-height: 100%;
-    width: 180px;
+    width: 200px;
     min-width: 120px;
     overflow: auto;
+}
+.sidebar:hover + .widen,
+.widen:hover{
+    opacity: 1;
+}
+.widen{
+    margin: 10% 0 10% auto;
+    order: 2;
+    width: 2px;
+    background: linear-gradient(0, transparent, rgba(0,0,0,.25), transparent);
+    cursor: col-resize;
+    opacity: 0;
+    transition: opacity .24s;
 }
 
 .menu ul{
@@ -115,13 +132,11 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     align-items: center;
     justify-content: space-between;
     padding: 4px 8px;
+    opacity: .5;
 }
-.li:hover{
-    background-color: rgba(0, 0, 0, .15);
-}
+.li:hover,
 .li.active{
     opacity: 1;
-    background-color: rgba(255, 255, 255, .5);
 }
 .li > b {
     flex: 1 1 auto;
@@ -178,38 +193,61 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
 }
 
 .confirm{
-    display: none;
     box-sizing: border-box;
-    position: absolute;
+    position: absolute; z-index: 1;
     top: 50%; left: 50%;
     max-width: 100%;
     max-height: 100%;
-    padding: 12px;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(.94);
     background: rgba(255,255,255,.5);
     backdrop-filter: blur(12px);
+    box-shadow: 0 0 12px rgba(0,0,0,.15);
     border-radius: 2px;
+    transition: all .24s;
 }
+.in > .confirm {
+    transform: translate(-50%, -50%) scale(1);
+}
+.confirm > header {
+    padding: 8px 12px;
+    font-weight: 700;
+}
+.confirm > footer {
+    display: flex;
+    align-items: center;
+}
+.confirm a {
+    margin: 0 2px;
+    padding: 4px;
+}
+
+.backdrop{
+    position: absolute; z-index: 100;
+    left: 0; top: 0; right: 0; bottom: 0;
+    opacity: 0;
+    display: none;
+    transition: all .15s;
+}
+.backdrop.active{ display: block; }
+.backdrop.in{ opacity: 1; }
 
 .contextmenu{
     position: absolute;
-    z-index: 100;
-    left: 100%; top: 100%;
-    padding: 4px 0;
+    min-width: 160px;
     border-radius: 2px;
-    background: rgba(255,255,255,.4);
+    background: rgba(0,0,0,.6);
+    color: #fff;
     backdrop-filter: blur(12px);
-    box-shadow: 0 0 12px rgba(0, 0, 0, .05);
-    visibility: hidden;
+    box-shadow: 0 0 12px rgba(0, 0, 0, .15);
     white-space: nowrap;
     overflow: hidden;
 }
 .contextmenu > a {
     display: block;
-    padding: 4px 8px;
+    padding: 4px 12px;
 }
 .contextmenu > a:hover {
-    background-color: rgba(255,255,255,.5);
+    background-color: rgba(0,0,0,.5);
 }
 
 .footer{
