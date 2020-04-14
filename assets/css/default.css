@@ -104,7 +104,7 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     max-width: 100%;
     min-height: 100%;
     width: 200px;
-    min-width: 120px;
+    min-width: 160px;
     overflow: auto;
 }
 .sidebar:hover + .widen,
@@ -144,16 +144,16 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.tgl-close{
+.status{
     margin-left: 8px;
     width: 8px; height: 8px;
     flex-shrink: 0;
-    background-color: #ff5a5a;
+    background-color: #7c8bf1;
     border-radius: 8px;
     transform: scale(0);
     transition: all .12s;
 }
-.li:hover > .tgl-close {
+.li.active > .status {
     transform: scale(1);
 }
 .menu ul.active {
@@ -201,7 +201,7 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     transform: translate(-50%, -50%) scale(.94);
     background: rgba(255,255,255,.5);
     backdrop-filter: blur(12px);
-    box-shadow: 0 0 12px rgba(0,0,0,.15);
+    box-shadow: 0 0 12px rgba(0,0,0,.05);
     border-radius: 2px;
     transition: all .24s;
 }
@@ -233,21 +233,20 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
 
 .contextmenu{
     position: absolute;
-    min-width: 160px;
+    min-width: 128px;
     border-radius: 2px;
-    background: rgba(0,0,0,.6);
-    color: #fff;
+    background: rgba(255,255,255,.6);
     backdrop-filter: blur(12px);
-    box-shadow: 0 0 12px rgba(0, 0, 0, .15);
+    box-shadow: 0 0 12px rgba(0, 0, 0, .05);
     white-space: nowrap;
     overflow: hidden;
 }
 .contextmenu > a {
     display: block;
-    padding: 4px 12px;
+    padding: 6px 12px;
 }
 .contextmenu > a:hover {
-    background-color: rgba(0,0,0,.5);
+    background-color: rgba(255,255,255,.8);
 }
 
 .footer{

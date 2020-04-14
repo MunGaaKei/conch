@@ -1,0 +1,1 @@
+let $editor = doc.querySelector('.editor');
