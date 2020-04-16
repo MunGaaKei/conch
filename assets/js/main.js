@@ -6,6 +6,7 @@ const IPC = ELECTRON.ipcRenderer;
 const SHELL = ELECTRON.shell;
 const FS = require('fs');
 const RL = require('readline');
+const OS = require('os');
 
 const $header = doc.querySelector('.header');
 const $sidebar = doc.querySelector('.sidebar');
@@ -38,16 +39,18 @@ let generateMenu = ( files = {}, sub = true ) => {
                 ${o.files? `<ul>${generateMenu(o.files)}</ul></li>`: `</li>`}`;
     }
     if( sub ) return html;
-    $menu.innerHTML = html;
+    $menu.insertAdjacentHTML('beforeend', html);
 }
 
 // 激活目录文件
 let activateMenu = key => {
     let $prev = $menu.querySelector('.active');
     let $li = $menu.querySelector(`[data-key="${key}"]`);
+    let o = WORKSPACE[key];
 
-    readFile( WORKSPACE[key].path ).then( res => {
+    readFile( o.path ).then( res => {
         $editor.innerHTML = res;
+        $editor.dataset.id = key;
     });
 
     $prev && $prev.classList.remove( 'active' );
@@ -81,7 +84,7 @@ let generateID = () => {
     let id = '';
     let s = 'abcdefghijklmnopqrstuvwxyz';
     let i = 0;
-    for(; i < 3; i++) { id += s[26 * Math.random()]; }
+    for(; i < 4; i++) { id += s[Math.round(26 * Math.random())]; }
     return new Date().getTime() + id;
 }
 
@@ -102,16 +105,37 @@ let directive = ( act = '', tar ) => {
 
 
 // 读取文件
-let readFile = async file => {
-    const stream = FS.createReadStream( file );
-    const lines = RL.createInterface({
+let readFile = async path => {
+    let stream = FS.createReadStream( path );
+    let lines = RL.createInterface({
         input: stream,
         crlfDelay: Infinity,
         autoNext: true
     });
     let line, content = '';
-    for await ( line of lines ) content += `${line}<br>`;
+    for await ( line of lines ) content += `${line}${OS.EOL}`;
     return content;
+}
+
+// 写入TXT文件
+let writeTXT = (key, o) => {
+    let stream = FS.createWriteStream( o.path );
+    stream.write( $editor.textContent );
+}
+
+// 保存
+let save = () => {
+    let key = $editor.dataset.id;
+    if( key ){
+        let o = WORKSPACE[key];
+        switch (o.type) {
+            case 2: writeTXT( key, o ); break;
+            case 1: break;
+            default: break;
+        }
+    } else {
+
+    }
 }
 
 // toggle 侧边栏目录
@@ -192,12 +216,15 @@ $content.addEventListener('drop', e => {
     if( !id ){
         id = generateID();
         let data = {
-            title: file.name,
             path: file.path,
-            size: file.size
+            size: file.size,
+            original: file
         };
         switch( file.type ){
             case 'text/plain':
+                let name = file.name.split('.');
+                name.length -= 1;
+                data.title = name.join('.');
                 data.type = 2;
                 break;
             default: break;
@@ -220,8 +247,7 @@ $menu.addEventListener('click', e => {
             if( $ul ){
                 $ul.classList.toggle( 'active' );
             } else if( !tar.classList.contains('active') ) {
-                // ActiveTABS[ tar.dataset.key ]
-                
+                activateMenu(tar.dataset.key);
             }
         }
         if( tar.classList.contains('tgl-close') ){
@@ -284,9 +310,7 @@ $content.addEventListener('keyup', e => {
     
     switch( e.keyCode ){
         case 83:    // save: ctrl+s
-            if( e.ctrlKey ){
-                
-            }
+            e.ctrlKey && save();
             break;
         case 78:    // toggle sidebar: ctrl+n
             e.ctrlKey && sidebar();

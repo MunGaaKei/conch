@@ -106,6 +106,7 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     width: 200px;
     min-width: 160px;
     overflow: auto;
+    user-select: none;
 }
 .sidebar:hover + .widen,
 .widen:hover{
@@ -181,7 +182,7 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     width: 100%;
     max-width: 720px;
     outline: none;
-    word-break: break-all;
+    overflow-wrap: break-word;
     white-space: pre-wrap;
     text-align: left;
     transition: all .24s;
@@ -251,6 +252,7 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
 
 .footer{
     display: flex;
+    align-items: center;
     flex-direction: row-reverse;
     padding: 4px 6px;
     white-space: nowrap;
@@ -260,10 +262,11 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
 .btn {
     position: relative;
     display: inline-flex;
-    padding: 6px 12px;
+    padding: 4px 6px;
     font-weight: 600;
     user-select: none;
     -webkit-app-region: no-drag;
+    overflow: hidden;
 }
 .btn > span {
     position: relative; z-index: 1;
@@ -271,4 +274,13 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
 .btn:before{
     content: '\20';
     position: absolute;
+    left: 100%; top: 40%;
+    width: 0%; height: 6px;
+    border-radius: 4px;
+    background: rgba(0,0,0,.1);
+    transition: left .5s, width .5s;
+}
+.btn:hover:before {
+    transition: width .5s;
+    left: 0; width: 100%;
 }
