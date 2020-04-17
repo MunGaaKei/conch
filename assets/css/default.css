@@ -107,10 +107,17 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     min-width: 160px;
     overflow: auto;
     user-select: none;
+    text-align: center;
+    background: rgba(255,255,255,.36);
+    border-radius: 4px 0 0 4px;
 }
 .sidebar:hover + .widen,
 .widen:hover{
     opacity: 1;
+}
+.sidebar input {
+    width: 0; height: 0;
+    transform: scale(0);
 }
 .widen{
     margin: 10% 0 10% auto;
@@ -122,11 +129,20 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     transition: opacity .24s;
 }
 
+.menu {
+    text-align: left;
+}
 .menu ul{
     height: 0;
     padding-left: 0;
     overflow: hidden;
     transition: all .24s;
+}
+.menu:not(:empty) + .btn {
+    display: none;
+}
+.menu + .btn {
+    margin: 12px auto;
 }
 .li{
     display: flex;
@@ -161,9 +177,6 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
     height: unset;
     padding-left: 1em;
     height: auto;
-}
-.menu > li > ul {
-    font-size: 0.86em;
 }
 .section{
     position: relative;
@@ -253,10 +266,13 @@ img,video,audio,iframe{ margin: auto; max-height: 100%; max-width: 100%; transit
 .footer{
     display: flex;
     align-items: center;
-    flex-direction: row-reverse;
     padding: 4px 6px;
     white-space: nowrap;
     -webkit-app-region: drag;
+}
+.log {
+    margin-left: auto;
+    opacity: 0.8;
 }
 
 .btn {

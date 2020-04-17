@@ -23,7 +23,7 @@
         <a class="nav iconfont icon-sidebar" data-act="sidebar"></a>
         <a class="nav iconfont icon-read" data-act="read"></a>
         <!-- <div class="dropdown" data-act="dropdown">
-            <a class="nav iconfont icon-add"></a>
+            <a class="nav iconfont icon-draft"></a>
             <div class="context leftward">
                 <a>普通文本</a>
                 <a>富文本编辑</a>
@@ -37,19 +37,23 @@
     <div class="content">
         <aside class="sidebar">
             <ul class="menu"></ul>
+            <a class="btn">选择文件</a>
+            <input id="select" type="file" accept="text/plain">
         </aside>
 
         <div class="widen"></div>
     
         <section class="section">
-            <div class="editor" contenteditable></div>
+            <div class="editor" contenteditable="plaintext-only"></div>
         </section>
 
     </div>
 
 </div>
 
-<div class="backdrop dismiss"><div class="contextmenu"></div></div>
+<div class="backdrop dismiss">
+    <div class="contextmenu"></div>
+</div>
 
 <div class="backdrop">
     <div class="confirm">
@@ -68,6 +72,7 @@
 
 <footer class="footer">
     <a class="btn" data-act="save"><span>保存</span></a>
+    <span class="log"></span>
 </footer>
 
 <script src="assets/js/main.js" type="module"></script>

@@ -14,6 +14,7 @@ const $menu = doc.querySelector('.menu');
 const $content = doc.querySelector('.content');
 const $contextmenu = doc.querySelector('.contextmenu');
 const $confirm = doc.querySelector('.confirm');
+const $file = doc.getElementById('select');
 
 let { WORKSPACE } = win.localStorage;
 let $editor = doc.querySelector('.editor');
@@ -51,6 +52,7 @@ let activateMenu = key => {
     readFile( o.path ).then( res => {
         $editor.innerHTML = res;
         $editor.dataset.id = key;
+        $editor.dataset.type = o.type;
     });
 
     $prev && $prev.classList.remove( 'active' );
@@ -98,9 +100,38 @@ let directive = ( act = '', tar ) => {
             // 保存 ACTIVETABS & WORKSPACE
             IPC.send('app-close');
             break;
+        case 'add': $file.click(); break;
         case 'sidebar': sidebar(); break;
         default: break;
     }
+}
+
+
+// 文件数据填充
+let setItem = file => {
+    let id = checkPath( file.path );
+    if( !id ) {
+        id = generateID();
+        let data = {
+            name: file.name,
+            path: file.path,
+            size: file.size,
+            original: file
+        };
+        switch( file.type ){
+            case 'text/plain':
+                let name = data.name.split('.');
+                name.length -= 1;
+                data.title = name.join('.');
+                data.type = 2;
+                break;
+            default: break;
+        }
+        let item = {}
+        item[id] = WORKSPACE[id] = data;
+        generateMenu( item, false );
+    }
+    return id;
 }
 
 
@@ -210,33 +241,17 @@ $content.addEventListener('dragover', e => { e.preventDefault(); });
 $content.addEventListener('drop', e => {
     e.preventDefault();
     let file = e.dataTransfer.files[0];
-    if( !file ) return;
-
-    let id = checkPath( file.path );
-    if( !id ){
-        id = generateID();
-        let data = {
-            path: file.path,
-            size: file.size,
-            original: file
-        };
-        switch( file.type ){
-            case 'text/plain':
-                let name = file.name.split('.');
-                name.length -= 1;
-                data.title = name.join('.');
-                data.type = 2;
-                break;
-            default: break;
-        }
-        let item = {};
-        item[id] = data;
-        WORKSPACE[ id ] = data;
-        generateMenu(item, false);
-    }
-    activateMenu( id );
+    file && activateMenu( setItem(file) );
 });
 
+
+// 选择文件
+$file.addEventListener('change', () => {
+    let file = $file.files[0];
+    file && activateMenu( setItem(file) );
+});
+
+$sidebar.querySelector('.btn').addEventListener('click', () => { $file.click(); });
 
 // 侧边目录栏点击事件
 $menu.addEventListener('click', e => {
